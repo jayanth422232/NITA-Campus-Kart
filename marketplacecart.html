@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stationary Cart</title>
+  <link rel="stylesheet" href="stationarycart.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    .discount-section, .delivery-section {
+      margin-top: 20px;
+    }
+
+    .discount-section input, .delivery-section input {
+      margin-right: 10px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Cart</h1>
+    <ul id="cartItems"></ul>
+    <p>Subtotal: ₹<span id="cartSubtotal">0</span></p>
+
+    <!-- Discount Code Section -->
+    <div class="discount-section">
+      <label for="discount-code">Enter Discount Code:</label>
+      <input type="text" id="discount-code" placeholder="Enter code (e.g., HALF50)">
+      <button id="apply-discount">Apply Discount</button>
+      <p id="discount-message" style="color: green; display: none;">Discount applied!</p>
+    </div>
+
+    <!-- Delivery Options -->
+    <div class="delivery-section">
+      <h3>Choose Delivery Option:</h3>
+      <label>
+        <input type="radio" name="delivery" value="cycle" checked> Cycle Delivery (+₹20)
+      </label>
+      <br>
+      <label>
+        <input type="radio" name="delivery" value="walk"> Walk Delivery (+₹10)
+      </label>
+    </div>
+
+    <!-- Total Cost -->
+    <p>Total: ₹<span id="cartTotal">0</span></p>
+
+    <!-- Order Now Button -->
+    <button id="order-now">Order Now</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const cartItemsList = document.getElementById('cartItems');
+      const cartSubtotalSpan = document.getElementById('cartSubtotal');
+      const cartTotalSpan = document.getElementById('cartTotal');
+      const discountCodeInput = document.getElementById('discount-code');
+      const applyDiscountBtn = document.getElementById('apply-discount');
+      const discountMessage = document.getElementById('discount-message');
+      const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
+      const orderNowBtn = document.getElementById('order-now');
+
+      let subtotal = 0;
+      let discount = 0;
+      let deliveryCost = 20; // Default delivery cost for cycle delivery
+
+      // Function to update the cart display
+      function updateCartDisplay() {
+        cartItemsList.innerHTML = ''; // Clear the list
+        subtotal = 0;
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+        for (const itemName in cart) {
+          if (cart.hasOwnProperty(itemName)) {
+            const item = cart[itemName];
+            const itemTotal = item.price * item.quantity;
+            subtotal += itemTotal;
+
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.name} x ${item.quantity} = ₹${itemTotal}`;
+            cartItemsList.appendChild(listItem);
+          }
+        }
+
+        cartSubtotalSpan.textContent = subtotal;
+        updateTotalCost();
+      }
+
+      // Function to update the total cost
+      function updateTotalCost() {
+        const total = subtotal - discount + deliveryCost;
+        cartTotalSpan.textContent = total;
+      }
+
+      // Apply discount code
+      applyDiscountBtn.addEventListener('click', function () {
+        const code = discountCodeInput.value.trim().toLowerCase();
+        if (code === 'half50') {
+          discount = subtotal * 0.5; // 50% discount
+          discountMessage.style.display = 'block';
+        } else {
+          discount = 0;
+          alert('Invalid discount code!');
+        }
+        updateTotalCost();
+      });
+
+      // Update delivery cost based on selected option
+      deliveryOptions.forEach(option => {
+        option.addEventListener('change', function () {
+          deliveryCost = this.value === 'cycle' ? 20 : 10; // Cycle: ₹20, Walk: ₹10
+          updateTotalCost();
+        });
+      });
+
+      // Redirect to another webpage on "Order Now"
+      orderNowBtn.addEventListener('click', function () {
+        alert('Order placed successfully!');
+        window.location.href = 'orderpage.html'; // Replace with your confirmation page
+      });
+
+      // Initial cart display update
+      updateCartDisplay();
+    });
+  </script>
+</body>
+</html>

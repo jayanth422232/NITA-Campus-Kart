@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f9fbfd;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4285f4;
+    color: white;
+    padding: 15px 30px;
+  }
+  
+  .navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .container {
+    max-width: 1000px;
+    margin: 40px auto;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  textarea, input[type=\"text\"] {
+    padding: 12px;
+    width: 80%;
+    max-width: 400px;
+    margin: 10px auto;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    background-color: #34a853;
+    color: white;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 16px;
+    transition: 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #0c8b3f;
+  }
+  
+  footer {
+    background-color: #eeeeee;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  .search-bar {
+    padding: 10px;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  .medicine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .medicine-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .medicine-card img {
+    max-width: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  

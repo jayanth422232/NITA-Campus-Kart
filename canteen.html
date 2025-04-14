@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canteen Menu</title>
+  <link rel="stylesheet" href="canteen.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Profile Picture Styling */
+#profile-picture {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#profile-picture img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+/* Profile Side Menu Styling */
+.profile-menu {
+  position: fixed;
+  top: 0;
+  right: -300px; /* Initially hidden */
+  width: 300px;
+  height: 100%;
+  background-color: #007bff;
+  color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+
+.profile-menu-content {
+  padding: 20px;
+}
+
+.profile-menu h2 {
+  margin-top: 0;
+}
+
+.profile-menu button {
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.profile-menu button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+
+/* Overlay to close the menu */
+.profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 998; /* Below the profile menu */
+}
+    /* Cutlery Section */
+.cutlery-section {
+  margin: 20px 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cutlery-section p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cutlery-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.cutlery-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cutlery-btn.active {
+  background-color: #28a745; /* Green for active */
+}
+
+.cutlery-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+#cutlery-options {
+  margin-top: 15px;
+}
+
+#cutlery-options label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#cutlery-options input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    background-image: url("menuback.jpg");
+    background-size: cover;  /* Ensures the image covers the entire screen */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    background-attachment: fixed; /* Keeps background fixed while scrolling */
+    color: white;
+}
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .logo img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .navbar .search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center; /* Align items vertically */
+  position: relative;
+  max-width: 600px; /* Optional: Limit the width of the search bar */
+  margin-right: 20px; /* Add spacing between the search bar and other elements */
+}
+
+.navbar .search-bar input {
+  width: 100%; /* Make the input take the full width */
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.navbar .search-bar button {
+  position: absolute;
+  right: 25px; /* Position the button inside the right end of the search bar */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent; /* Make the button background transparent */
+  border: none;
+  border-radius: 50%;
+  padding: 0; /* Remove padding to fit the GIF */
+  cursor: pointer;
+  box-shadow: none; /* Remove box shadow */
+  width: 40px; /* Set the width of the button */
+  height: 40px; /* Set the height of the button */
+}
+
+.navbar .search-bar button img {
+  width: 100%; /* Make the GIF fill the button */
+  height: 100%; /* Make the GIF fill the button */
+  object-fit: contain; /* Ensure the GIF scales proportionally */
+}
+    .navbar .search-bar button:hover {
+      background-color: #003d80;
+    }
+
+    .navbar .nav-icons {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .nav-icons img {
+      height: 30px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+
+    .navbar .login-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar .login-btn:hover {
+      background-color: #218838;
+    }
+
+    /* Filter Buttons */
+    .filter-buttons {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .filter-buttons button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .filter-buttons button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Menu Section */
+    .menu-page {
+      padding: 20px;
+    }
+
+    .menu-page h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+  .menu-card {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+    .menu-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .menu-card h3 {
+      margin: 10px;
+      color: #007bff;
+    }
+
+    .menu-card p {
+      margin: 10px;
+      color: #555;
+    }
+
+    .menu-card .price {
+      font-weight: bold;
+      color: #28a745;
+    }
+
+    .menu-card .spice-rating {
+      color: #ff4500;
+    }
+
+    .menu-card .star-rating {
+      color: #f4c430;
+    }
+
+    .menu-card .reviews {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .menu-card .btn {
+      display: block;
+      width: calc(100% - 20px);
+      margin: 10px auto;
+      padding: 10px;
+      text-align: center;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-card .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #343a40;
+      color: white;
+      padding: 20px 0;
+    }
+
+    .footer-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .footer-section {
+      margin: 10px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 5px;
+    }
+
+    .footer-section ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-section ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .logo-row img {
+      height: 30px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="user_portal.html">
+        <img src="./backbutton.jpg" alt="Back Button">
+      </a>
+      <img src="./cropped-cartlogo.jpg" alt="CampusKart Logo">
+    </div>
+    <div class="search-bar">
+      <input type="text" id="search-bar" placeholder="Search for menu items...">
+      <button><img src="./searchbar2.gif" alt="Search" style="width: 60px; height: 35px;margin-right:1500px;"></button>
+    </div>
+    <div class="nav-icons">
+      <button class="login-btn">Login</button>
+      <a href="./canteencart.html"><img src="./cropped_image.png" alt="Cart"></a>
+      <img id="profile-icon" src="./profile.webp" alt="Profile">
+    </div>
+  </nav>
+
+  <!-- Filter Buttons -->
+  <div class="filter-buttons">
+    <button id="vegFilter">Veg</button>
+    <button id="nonVegFilter">Non-Veg</button>
+    <button id="allFilter">All</button>
+  </div>
+
+  <!-- Menu Section -->
+  <section class="menu-page">
+    <h2>Canteen Menu</h2>
+    <div class="menu-grid">
+      <!-- Veg Menu Items -->
+      <div class="menu-card veg">
+        <img src="./kaju-biryani.avif" alt="Kaju Biryani">
+        <h3>Kaju Biryani</h3>
+        <p class="price">₹250</p>
+        <p>Rich and flavorful biryani with cashew nuts.</p>
+        <p class="spice-rating">Spice Level: 🌶️🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.5/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Delicious and worth the price!"</p>
+          <p>"Perfectly cooked and flavorful."</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+      <div class="menu-card veg">
+        <img src="./naan.jpg" alt="Naan">
+        <h3>Naan</h3>
+        <p class="price">₹50</p>
+        <p>Soft and fluffy Indian bread.</p>
+        <p class="spice-rating">Spice Level: 🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (5.0/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Soft and fresh, goes well with curries."</p>
+          <p>"Best naan I've had in a while!"</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+      <div class="menu-card veg">
+        <img src="./paneer-butter-masala.jpg" alt="Paneer Butter Masala">
+        <h3>Paneer Butter Masala</h3>
+        <p class="price">₹300</p>
+        <p>Delicious paneer cooked in a creamy tomato gravy.</p>
+        <p class="spice-rating">Spice Level: 🌶️🌶️🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.2/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Rich and creamy, loved it!"</p>
+          <p>"Could use a bit more spice, but still great."</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+      <div class="menu-card veg">
+        <img src="./tea.jpg" alt="Tea">
+        <h3>Tea</h3>
+        <p class="price">₹20</p>
+        <p>Refreshing hot tea.</p>
+        <p class="spice-rating">Spice Level: 🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (5.0/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Perfect for a quick refreshment."</p>
+          <p>"Loved the aroma and taste!"</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+      <div class="menu-card veg">
+        <img src="./icecream.jpg" alt="Ice Cream">
+        <h3>Ice Cream</h3>
+        <p class="price">₹60</p>
+        <p>Delicious and creamy ice cream.</p>
+        <p class="spice-rating">Spice Level: None</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.8/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Perfect dessert for a hot day!"</p>
+          <p>"Creamy and flavorful."</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Non-Veg Menu Items -->
+      <div class="menu-card non-veg">
+        <img src="./chicken-biryani.jpg" alt="Chicken Biryani">
+        <h3>Chicken Biryani</h3>
+        <p class="price">₹350</p>
+        <p>Spicy and aromatic chicken biryani.</p>
+        <p class="spice-rating">Spice Level: 🌶️🌶️🌶️🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (4.8/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Best biryani in town!"</p>
+          <p>"Perfectly spiced and aromatic."</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+      <div class="menu-card non-veg">
+        <img src="./egg-bhurji.jpg" alt="Egg Bhurji">
+        <h3>Egg Bhurji</h3>
+        <p class="price">₹120</p>
+        <p>Scrambled eggs cooked with spices.</p>
+        <p class="spice-rating">Spice Level: 🌶️🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.3/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Tasty and filling breakfast option."</p>
+          <p>"Loved the spices and flavors."</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+      <div class="menu-card non-veg">
+        <img src="./prawn-biryani.jpg" alt="Prawn Biryani">
+        <h3>Prawn Biryani</h3>
+        <p class="price">₹400</p>
+        <p>Flavorful biryani with prawns.</p>
+        <p class="spice-rating">Spice Level: 🌶️🌶️🌶️</p>
+        <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.6/5)</p>
+        <div class="reviews">
+          <p><strong>Reviews:</strong></p>
+          <p>"Amazing seafood biryani!"</p>
+          <p>"Perfectly cooked prawns and rice."</p>
+        </div>
+        <button class="btn">Add to Cart</button>
+      </div>
+        <div class="menu-card veg">
+          <img src="./veg-fried-rice.jpg" alt="Veg Fried Rice">
+          <h3>Veg Fried Rice</h3>
+          <p class="price">₹150</p>
+          <p>Delicious fried rice with fresh vegetables.</p>
+          <p class="spice-rating">Spice Level: 🌶️🌶️</p>
+          <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.4/5)</p>
+          <div class="reviews">
+            <p><strong>Reviews:</strong></p>
+            <p>"Perfectly cooked and flavorful."</p>
+            <p>"Great option for a quick meal."</p>
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
+      
+        <div class="menu-card veg">
+          <img src="./masaladosa.jpg" alt="Masala Dosa">
+          <h3>Masala Dosa</h3>
+          <p class="price">₹80</p>
+          <p>South Indian delicacy with potato filling.</p>
+          <p class="spice-rating">Spice Level: 🌶️</p>
+          <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (4.9/5)</p>
+          <div class="reviews">
+            <p><strong>Reviews:</strong></p>
+            <p>"Crispy and delicious, loved the chutney!"</p>
+            <p>"Authentic taste, highly recommended."</p>
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
+      
+        <div class="menu-card non-veg">
+          <img src="./butter-chicken.jpg" alt="Butter Chicken">
+          <h3>Butter Chicken</h3>
+          <p class="price">₹350</p>
+          <p>Rich and creamy chicken curry.</p>
+          <p class="spice-rating">Spice Level: 🌶️🌶️</p>
+          <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (4.8/5)</p>
+          <div class="reviews">
+            <p><strong>Reviews:</strong></p>
+            <p>"The best butter chicken I've ever had!"</p>
+            <p>"Perfectly balanced flavors, highly satisfying."</p>
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
+      
+        <div class="menu-card non-veg">
+          <img src="./fish-curry.jpg" alt="Fish Curry">
+          <h3>Fish Curry</h3>
+          <p class="price">₹300</p>
+          <p>Spicy and tangy fish curry.</p>
+          <p class="spice-rating">Spice Level: 🌶️🌶️🌶️</p>
+          <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.5/5)</p>
+          <div class="reviews">
+            <p><strong>Reviews:</strong></p>
+            <p>"Amazing flavors, loved the tangy twist."</p>
+            <p>"Perfectly cooked fish, highly recommended."</p>
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
+        <div class="menu-card veg">
+            <img src="./idli.jpg" alt="Idli">
+            <h3>Idli</h3>
+            <p class="price">₹40</p>
+            <p>Soft and fluffy steamed rice cakes served with chutney and sambar.</p>
+            <p class="spice-rating">Spice Level: 🌶️</p>
+            <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (4.9/5)</p>
+            <div class="reviews">
+              <p><strong>Reviews:</strong></p>
+              <p>"Perfect breakfast option, light and healthy!"</p>
+              <p>"Loved the chutney and sambar combination."</p>
+            </div>
+            <button class="btn">Add to Cart</button>
+          </div>
+          
+          <div class="menu-card veg">
+            <img src="./dosa.webp" alt="Dosa">
+            <h3>Dosa</h3>
+            <p class="price">₹70</p>
+            <p>Thin and crispy South Indian crepe served with chutney and sambar.</p>
+            <p class="spice-rating">Spice Level: 🌶️🌶️</p>
+            <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.7/5)</p>
+            <div class="reviews">
+              <p><strong>Reviews:</strong></p>
+              <p>"Crispy and delicious, loved the authentic taste!"</p>
+              <p>"Perfectly cooked, highly recommended."</p>
+            </div>
+            <button class="btn">Add to Cart</button>
+          </div>
+        <div class="menu-card veg">
+          <img src="./gulab-jamun.webp" alt="Gulab Jamun">
+          <h3>Gulab Jamun</h3>
+          <p class="price">₹50</p>
+          <p>Soft and sweet Indian dessert.</p>
+          <p class="spice-rating">Spice Level: None</p>
+          <p class="star-rating">Rating: ⭐⭐⭐⭐⭐ (5.0/5)</p>
+          <div class="reviews">
+            <p><strong>Reviews:</strong></p>
+            <p>"Melt-in-your-mouth goodness!"</p>
+            <p>"Perfect dessert to end a meal."</p>
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </section>
+     <!-- Cutlery Section -->
+<div class="cutlery-section">
+    <p>Do you need cutlery?</p>
+    <div class="cutlery-toggle">
+      <button id="cutlery-yes" class="cutlery-btn">Yes</button>
+      <button id="cutlery-no" class="cutlery-btn active">No</button>
+    </div>
+    <div id="cutlery-options" style="display: none; margin-top: 10px;">
+      <label for="plates">Plates (max 2):</label>
+      <input type="number" id="plates" min="0" max="2" value="0">
+      <label for="spoons">Spoons (max 2):</label>
+      <input type="number" id="spoons" min="0" max="2" value="0">
+    </div>
+  </div>
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Contact Us Section -->
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>support@campuskart.in</p>
+        <p>+91-7255882705</p>
+        <div class="logo-row">
+          <img src="./img/facebook.png" alt="facebook">
+          <img src="./img/social.png" alt="instagram">
+          <img src="./img/twitter.png" alt="twitter">
+        </div>
+      </div>
+
+      <!-- Company Section -->
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="welcome.html">About Us</a></li>
+          <li><a href="/media">Media Coverage</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- For You Section -->
+      <div class="footer-section">
+        <h3>For You</h3>
+        <ul>
+          <li><a href="/contact">Contact Us</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions">Terms And Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+<!-- Profile Side Menu -->
+<div id="profile-menu" class="profile-menu">
+    <div class="profile-menu-content">
+      <h2>Profile Details</h2>
+      <div id="profile-picture">
+        <img id="profile-img" src="./profilephoto.png" alt="Profile Picture" />
+      </div>
+      <div id="profile-details">
+        <!-- Profile details will be dynamically added here -->
+      </div>
+      <input type="file" id="profile-upload" accept="image/*" style="margin-top: 20px;" />
+      <button onclick="uploadProfilePicture()">Update Profile Picture</button>
+      <button onclick="editProfile()">Update Profile</button>
+    </div>
+  </div>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Filter functionality
+  const allFilter = document.getElementById('allFilter');
+  const vegFilter = document.getElementById('vegFilter');
+  const nonVegFilter = document.getElementById('nonVegFilter');
+  
+  const vegItems = document.querySelectorAll('.menu-card.veg');
+  const nonVegItems = document.querySelectorAll('.menu-card.non-veg');
+
+  vegFilter.addEventListener('click', function () {
+    vegItems.forEach(item => item.style.display = 'block');
+    nonVegItems.forEach(item => item.style.display = 'none');
+  });
+
+  nonVegFilter.addEventListener('click', function () {
+    vegItems.forEach(item => item.style.display = 'none');
+    nonVegItems.forEach(item => item.style.display = 'block');
+  });
+
+  allFilter.addEventListener('click', function () {
+    vegItems.forEach(item => item.style.display = 'block');
+    nonVegItems.forEach(item => item.style.display = 'block');
+  });
+
+  // Cutlery functionality
+  const cutleryYes = document.getElementById('cutlery-yes');
+  const cutleryNo = document.getElementById('cutlery-no');
+  const cutleryOptions = document.getElementById('cutlery-options');
+  const platesInput = document.getElementById('plates');
+  const spoonsInput = document.getElementById('spoons');
+
+  cutleryYes.addEventListener('click', function () {
+    cutleryYes.classList.add('active');
+    cutleryNo.classList.remove('active');
+    cutleryOptions.style.display = 'block';
+  });
+
+  cutleryNo.addEventListener('click', function () {
+    cutleryNo.classList.add('active');
+    cutleryYes.classList.remove('active');
+    cutleryOptions.style.display = 'none';
+  });
+
+  // Validation for plates input
+  platesInput.addEventListener('input', function () {
+    if (platesInput.value > 2) {
+      alert('You can select a maximum of 2 plates.');
+      platesInput.value = 2; // Reset to the maximum allowed value
+    }
+  });
+
+  // Validation for spoons input
+  spoonsInput.addEventListener('input', function () {
+    if (spoonsInput.value > 2) {
+      alert('You can select a maximum of 2 spoons.');
+      spoonsInput.value = 2; // Reset to the maximum allowed value
+    }
+  });
+});
+
+function openProfileMenu() {
+  const profileMenu = document.getElementById('profile-menu');
+  const profileDetails = document.getElementById('profile-details');
+  const profileImg = document.getElementById('profile-img');
+
+  // Retrieve user data from localStorage
+  const userData = JSON.parse(localStorage.getItem('userData')) || {};
+
+  // Helper function to get field value or "NA" if empty
+  const getFieldValue = (field) => (userData[field] ? userData[field] : 'NA');
+
+  // Set profile picture (default if not set)
+  const profilePicture = userData.picture || './profilephoto.png'; // Use saved picture or default
+  profileImg.src = profilePicture;
+
+  // Display user details
+  profileDetails.innerHTML = `
+    <p><strong>Name:</strong> ${getFieldValue('name')}</p>
+    <p><strong>Username:</strong> ${getFieldValue('username')}</p>
+    <p><strong>Email:</strong> ${getFieldValue('emailid')}</p>
+    <p><strong>Roll Number:</strong> ${getFieldValue('rollnumber')}</p>
+    <p><strong>Hostel Name:</strong> ${getFieldValue('hostelname')}</p>
+    <p><strong>Room Number:</strong> ${getFieldValue('roomnumber')}</p>
+    <p><strong>Phone Number:</strong> ${getFieldValue('phonenumber')}</p>
+    <p><strong>UPI ID:</strong> ${getFieldValue('upiid')}</p>
+    <p><strong>Gender:</strong> ${getFieldValue('gender')}</p>
+  `;
+
+  // Add overlay
+  const overlay = document.createElement('div');
+  overlay.classList.add('profile-overlay');
+  overlay.addEventListener('click', closeProfileMenu); // Close menu on overlay click
+  document.body.appendChild(overlay);
+
+  profileMenu.style.right = '0'; // Slide in the menu
+}
+
+// Close the profile menu
+function closeProfileMenu() {
+  const profileMenu = document.getElementById('profile-menu');
+  const overlay = document.querySelector('.profile-overlay');
+  profileMenu.style.right = '-300px'; // Slide out the menu
+  if (overlay) {
+    overlay.remove(); // Remove the overlay
+  }
+}
+
+// Edit profile details
+function editProfile() {
+  const profile = JSON.parse(localStorage.getItem('userData')) || {};
+  const newName = prompt('Enter your new name:', profile.name || '');
+  const newEmail = prompt('Enter your new email:', profile.emailid || '');
+  const newPhone = prompt('Enter your new phone number:', profile.phonenumber || '');
+
+  if (newName && newEmail && newPhone) {
+    profile.name = newName;
+    profile.emailid = newEmail;
+    profile.phonenumber = newPhone;
+
+    localStorage.setItem('userData', JSON.stringify(profile));
+    alert('Profile updated successfully!');
+    openProfileMenu(); // Refresh the profile details
+  }
+}
+
+// Update profile picture
+function uploadProfilePicture() {
+  const fileInput = document.getElementById('profile-upload');
+  const profileImg = document.getElementById('profile-img');
+
+  if (fileInput.files && fileInput.files[0]) {
+    const reader = new FileReader();
+
+    // Load the selected image and display it
+    reader.onload = function (e) {
+      profileImg.src = e.target.result;
+
+      // Save the image data URL to localStorage
+      const profile = JSON.parse(localStorage.getItem('userData')) || {};
+      profile.picture = e.target.result;
+      localStorage.setItem('userData', JSON.stringify(profile));
+
+      alert('Profile picture updated successfully!');
+    };
+
+    reader.readAsDataURL(fileInput.files[0]); // Read the file as a data URL
+  } else {
+    alert('Please select a file to upload.');
+  }
+}
+
+// Attach event listener to the profile icon
+document.getElementById('profile-icon').addEventListener('click', openProfileMenu);
+
+// Search functionality
+document.getElementById('search-bar').addEventListener('input', function () {
+  const query = this.value.toLowerCase(); // Get the search query in lowercase
+  const menuItems = document.querySelectorAll('.menu-card'); // Select all menu items
+
+  menuItems.forEach((item) => {
+    const itemName = item.querySelector('h3').textContent.toLowerCase(); // Get the item name in lowercase
+    if (itemName.includes(query)) {
+      item.style.display = 'block'; // Show the item if it matches the query
+    } else {
+      item.style.display = 'none'; // Hide the item if it doesn't match
+    }
+  });
+});
+
+// Add to cart functionality
+document.querySelectorAll('.btn').forEach((button) => {
+  button.addEventListener('click', function () {
+    const menuCard = this.closest('.menu-card'); // Find the closest menu card
+    const itemName = menuCard.querySelector('h3').textContent; // Get the item name
+    const itemPrice = parseFloat(menuCard.querySelector('.price').textContent.replace('₹', '')); // Get the item price
+    const itemId = itemName.toLowerCase().replace(/\s+/g, '-'); // Generate a unique ID based on the item name
+
+    // Get the current cart from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+    // Update the cart
+    if (cart[itemId]) {
+      cart[itemId].quantity += 1; // Increment quantity if item already exists
+    } else {
+      cart[itemId] = {
+        name: itemName,
+        price: itemPrice,
+        quantity: 1,
+      };
+    }
+
+    // Save the updated cart back to localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    alert(`${itemName} added to cart!`);
+  });
+});
+</script>
+</body>
+</html>

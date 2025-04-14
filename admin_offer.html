@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Offer</title>
+  <link rel="stylesheet" href="./project.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .offer-form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .offer-form h1 {
+      text-align: center;
+      color: #007bff;
+    }
+
+    .offer-form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    .offer-form input[type="text"],
+    .offer-form input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .offer-form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .offer-form button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="offer-form">
+    <h1>Create an Offer</h1>
+    <form id="offer-form">
+      <label for="offer-text">Offer Text:</label>
+      <input type="text" id="offer-text" placeholder="Enter your offer text" required>
+
+      <label for="offer-image">Upload Image:</label>
+      <input type="file" id="offer-image" accept="image/*" required>
+
+      <button type="submit">Generate Offer</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("offer-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Retrieve the offer text
+      const offerText = document.getElementById("offer-text").value.trim();
+
+      // Retrieve the uploaded image
+      const offerImageInput = document.getElementById("offer-image");
+      const offerImageFile = offerImageInput.files[0];
+
+      if (!offerText || !offerImageFile) {
+        alert("Please provide both offer text and an image.");
+        return;
+      }
+
+      // Convert the image file to a Base64 string
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const offerImageBase64 = event.target.result;
+
+        // Create an offer object
+        const offer = {
+          text: offerText,
+          image: offerImageBase64
+        };
+
+        // Retrieve existing offers from localStorage or initialize an empty array
+        const offers = JSON.parse(localStorage.getItem("offers")) || [];
+
+        // Add the new offer to the array
+        offers.push(offer);
+
+        // Save the updated offers array back to localStorage
+        localStorage.setItem("offers", JSON.stringify(offers));
+
+        alert("Offer generated successfully!");
+        window.location.href = "offers.html"; // Redirect to the offers page
+      };
+
+      reader.readAsDataURL(offerImageFile);
+    });
+  </script>
+</body>
+</html>

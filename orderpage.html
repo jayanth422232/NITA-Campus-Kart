@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delivery Communication</title>
+  <style>
+    .action-btn {
+  background-color: #ffc107;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+  display: inline-block;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #e0a800;
+}
+    /* Reviews Button */
+  
+    .review-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px; /* Add spacing between the buttons */
+  display: inline-block; /* Change from block to inline-block */
+  width: auto; /* Remove the full-width styling */
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.review-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.modal-content .save {
+  background: #28a745;
+  color: white;
+}
+
+.modal-content .cancel {
+  background: #dc3545;
+  color: white;
+}
+    .cancel-order-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+.cancel-order-btn:hover {
+  background-color: #c82333;
+}
+
+.cancel-order-btn.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+    .fade-in {
+  animation: fadeInDetails 1s ease forwards;
+}
+
+@keyframes fadeInDetails {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    .loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border: 8px solid #e0e0e0;
+  border-top: 8px solid #fc8019;
+  border-radius: 50%;
+  animation: spin 2s linear forwards;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  33.3% { transform: rotate(360deg); }
+  66.6% { transform: rotate(720deg); }
+  100% { transform: rotate(1080deg); }
+}
+
+.loader-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  opacity: 0;
+  animation: fadeText 6s linear forwards;
+}
+
+@keyframes fadeText {
+  0%, 16.6% { opacity: 1; }
+  33.3%, 49.9% { opacity: 1; }
+  66.6%, 100% { opacity: 1; }
+}
+
+.tick-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: #2ecc71;
+  display: none;
+}
+
+.pop-in {
+  animation: popIn 0.5s ease forwards;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-image: url("back.gif");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .details-card {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease;
+    }
+
+    .details-card:hover {
+      transform: scale(1.01);
+    }
+
+    .edit-button {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(252, 128, 25, 0.1);
+      border: 1px solid #fc8019;
+      color: #fc8019;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .edit-button:hover {
+      background: rgba(252, 128, 25, 0.2);
+    }
+
+    .otp-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .otp {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    .chat-box {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .chat-messages {
+      max-height: 150px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .chat-input button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      background: #fc8019;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .modal-content button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .modal-content .save {
+      background: #28a745;
+      color: white;
+    }
+
+    .modal-content .cancel {
+      background: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader-wrapper">
+        <div class="loader-container">
+          <div class="loader" id="loader"></div>
+          <div class="tick-mark" id="tickMark">&#10004;</div>
+        </div>
+        <div class="loader-text" id="loaderText">Preparing</div>
+      </div>
+    <div class="otp-section">
+      <p>Your OTP for verification is:</p>
+      <p class="otp" id="otp"></p>
+    </div>
+    <div class="section">
+        <div class="section-title">Delivery Partner Details</div>
+        <div class="details-card" id="partnerDetails" style="display: none;">
+          <div class="detail-row"><span class="detail-label">Name:</span><span class="detail-value" id="partnerName"></span></div>
+          <div class="detail-row"><span class="detail-label">Phone:</span><span class="detail-value"><a href="#" class="phone-link" id="partnerPhone"></a></span></div>
+          <div class="detail-row"><span class="detail-label">Rating:</span><span class="detail-value" id="partnerRating"></span></div>
+        </div>
+      </div>
+    <div class="section">
+      <div class="section-title">Delivery Address</div>
+      <div class="details-card">
+        <button class="edit-button" onclick="openEditModal()">Edit</button>
+        <div class="detail-row"><span class="detail-label">Name:</span><span class="detail-value" id="userName">Alice Smith</span></div>
+        <div class="detail-row"><span class="detail-label">Room No:</span><span class="detail-value" id="userRoom">Room 403</span></div>
+        <div class="detail-row"><span class="detail-label">Phone:</span><span class="detail-value" id="userPhone">+1 234-567-8900</span></div>
+      </div>
+    </div>
+
+    <div class="chat-box">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+    <!-- Timer Display -->
+<p id="cancelTimer" style="text-align: center; font-size: 16px; font-weight: bold; margin-top: 20px;">Time remaining to cancel: 2:00</p>
+
+<!-- Cancel Order Button -->
+<button id="cancelOrderBtn" class="cancel-order-btn" onclick="cancelOrder()">Cancel Order</button>
+  </div>
+<!-- Reviews Button -->
+<button id="reviewBtn" class="review-btn" onclick="openReviewModal()">Leave a Review</button>
+<!-- Return and Replace Buttons Placeholder -->
+<div id="stationaryActions" style="display: none; margin-top: 10px;">
+  <button id="returnItemBtn" class="action-btn" onclick="returnItem()">Return Item</button>
+  <button id="replaceItemBtn" class="action-btn" onclick="replaceItem()">Replace Item</button>
+</div> 
+<!-- Modal for editing delivery address -->
+  <div class="modal" id="editModal">
+    <div class="modal-content">
+      <h3>Edit Delivery Address</h3>
+      <input type="text" id="editName" placeholder="Name" />
+      <input type="text" id="editRoom" placeholder="Room No" />
+      <input type="tel" id="editPhone" placeholder="Phone Number" />
+      <button class="save" onclick="saveAddress()">Save</button>
+      <button class="cancel" onclick="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+
+
+<!-- Reviews Modal -->
+<div class="modal" id="reviewModal">
+  <div class="modal-content">
+    <h3>Submit Your Review</h3>
+    <label for="reviewType">Select Review Type:</label>
+    <select id="reviewType">
+      <option value="canteen">Canteen</option>
+      <option value="stationary">Stationary</option>
+    </select>
+    <label for="reviewText">Your Feedback:</label>
+    <textarea id="reviewText" placeholder="Enter your feedback here..." rows="4"></textarea>
+    <button class="save" onclick="submitReview()">Submit</button>
+    <button class="cancel" onclick="closeReviewModal()">Cancel</button>
+  </div>
+</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Generate a random 4-digit OTP
+      const otp = Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('otp').textContent = otp;
+    });
+
+    // Open the edit modal
+    function openEditModal() {
+      const modal = document.getElementById('editModal');
+      modal.classList.add('active');
+
+      // Pre-fill the input fields with current values
+      document.getElementById('editName').value = document.getElementById('userName').textContent;
+      document.getElementById('editRoom').value = document.getElementById('userRoom').textContent;
+      document.getElementById('editPhone').value = document.getElementById('userPhone').textContent;
+    }
+
+    // Close the edit modal
+    function closeEditModal() {
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('active');
+    }
+
+    // Save the updated address
+    function saveAddress() {
+      document.getElementById('userName').textContent = document.getElementById('editName').value;
+      document.getElementById('userRoom').textContent = document.getElementById('editRoom').value;
+      document.getElementById('userPhone').textContent = document.getElementById('editPhone').value;
+
+      // Close the modal after saving
+      closeEditModal();
+    }
+
+    // Mock WebSocket and Chat Functionality
+    const chatMessages = document.getElementById('chatMessages');
+    const responses = [
+      "Got it! I'll be there soon.",
+      "Your order is on the way!",
+      "Please share the OTP when I arrive.",
+      "Thank you for your patience!"
+    ];
+
+    function sendMessage() {
+      const chatInput = document.getElementById('chatInput');
+      const message = chatInput.value.trim();
+      if (message) {
+        addMessage("You", message);
+        chatInput.value = "";
+
+        // Simulate a response from the delivery partner
+        setTimeout(() => {
+          const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+          addMessage("Delivery Partner", randomResponse);
+        }, 2000);
+      }
+    }
+
+    function addMessage(sender, message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.textContent = `${sender}: ${message}`;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+  const loaderText = document.getElementById('loaderText');
+  const textSequence = ["Sending request...", "Request accepted", "On the way to room"];
+  let index = 0;
+
+  function showNextText() {
+    if (index < textSequence.length) {
+      loaderText.textContent = textSequence[index];
+      index++;
+      setTimeout(showNextText, 2000); // Show each step for 2 seconds
+    } else {
+      document.getElementById('loader').style.display = 'none';
+      const tick = document.getElementById('tickMark');
+      tick.style.display = 'block';
+      tick.classList.remove('pop-in');
+      void tick.offsetWidth; // Trigger reflow for animation
+      tick.classList.add('pop-in');
+
+      // Show delivery partner details after animation ends
+      setTimeout(() => {
+        document.getElementById('partnerName').textContent = 'John Doe';
+        document.getElementById('partnerPhone').textContent = '+91 98765 43210';
+        document.getElementById('partnerPhone').href = 'tel:+919876543210';
+        document.getElementById('partnerRating').textContent = '4.8 ⭐';
+        const partnerDetails = document.getElementById('partnerDetails');
+        partnerDetails.style.display = 'block';
+        partnerDetails.classList.add('fade-in');
+      }, 500); // Slight delay to ensure smooth transition
+    }
+  }
+
+  // Start the animation sequence immediately
+  showNextText();
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const cancelOrderBtn = document.getElementById('cancelOrderBtn');
+  const cancelTimer = document.getElementById('cancelTimer');
+
+  let timeRemaining = 120; // 2 minutes in seconds
+
+  // Function to update the timer display
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    cancelTimer.textContent = `Time remaining to cancel: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  // Start the countdown timer
+  const timerInterval = setInterval(() => {
+    if (timeRemaining > 0) {
+      timeRemaining--;
+      updateTimerDisplay();
+    } else {
+      // Hide the cancel button and timer when time runs out
+      clearInterval(timerInterval);
+      cancelOrderBtn.style.visibility = 'hidden';
+      cancelTimer.style.visibility = 'hidden';
+    }
+  }, 1000); // Update every second
+
+  // Initialize the timer display
+  updateTimerDisplay();
+
+  // Cancel order function
+  window.cancelOrder = function () {
+    alert("Order has been cancelled.");
+    window.location.href = "user_portal.html"; // Redirect to user portal
+  };
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const reviewModal = document.getElementById('reviewModal');
+  const reviewTypeSelect = document.getElementById('reviewType');
+
+  // Detect referrer and set default review type
+  const referrer = document.referrer;
+  if (referrer.includes('canteencart.html')) {
+    reviewTypeSelect.value = 'canteen';
+  } else if (referrer.includes('stationarycart.html')) {
+    reviewTypeSelect.value = 'stationary';
+  }
+
+  // Open the review modal
+  window.openReviewModal = function () {
+    reviewModal.classList.add('active');
+  };
+
+  // Close the review modal
+  window.closeReviewModal = function () {
+    reviewModal.classList.remove('active');
+  };
+
+  // Submit the review
+  window.submitReview = function () {
+    const reviewType = reviewTypeSelect.value;
+    const reviewText = document.getElementById('reviewText').value.trim();
+
+    if (!reviewText) {
+      alert('Please enter your feedback.');
+      return;
+    }
+
+    // Retrieve existing reviews from localStorage or initialize
+    const reviews = JSON.parse(localStorage.getItem('reviews')) || { canteen: [], stationary: [] };
+
+    // Add the new review to the appropriate category
+    reviews[reviewType].push(reviewText);
+
+    // Save the updated reviews back to localStorage
+    localStorage.setItem('reviews', JSON.stringify(reviews));
+
+    alert('Thank you for your feedback!');
+    closeReviewModal();
+  };
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const referrer = document.referrer;
+  const stationaryActions = document.getElementById('stationaryActions');
+
+  // Show "Return Item" and "Replace Item" buttons if coming from stationaryitems.html
+  if (referrer.includes('stationaryitems.html')) {
+    stationaryActions.style.display = 'block';
+  }
+
+  // Handle "Return Item" action
+  window.returnItem = function () {
+    alert('Return process initiated. Please follow the instructions sent to your email.');
+    // Optionally redirect to a return page
+    // window.location.href = 'return_item.html';
+  };
+
+  // Handle "Replace Item" action
+  window.replaceItem = function () {
+    alert('Replace process initiated. Please follow the instructions sent to your email.');
+    // Optionally redirect to a replace page
+    // window.location.href = 'replace_item.html';
+  };
+});
+  </script>
+</body>
+</html>

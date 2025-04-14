@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Medicines</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    /* General body styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    /* Header styling */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #007bff;
+      color: white;
+    }
+
+    .header .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .cart-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Form styling */
+    .form-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-container select,
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Medicine grid styling */
+    .medicine-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .medicine-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      width: 200px;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .medicine-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .medicine-card button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .medicine-card button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal styling */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .modal-content .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-content .close:hover,
+    .modal-content .close:focus {
+      color: black;
+      text-decoration: none;
+    }
+
+    .modal-content button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .modal-content button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Footer styling */
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with logo and cart icon -->
+  <header class="header">
+    <div class="logo">HealthCare</div>
+    <div class="cart-icon" onclick="showCart()">
+      <i class="ph ph-shopping-cart"></i>
+    </div>
+  </header>
+
+  <!-- Form for symptoms and temperature -->
+  <div class="form-container">
+    <h2>Enter Your Symptoms</h2>
+    <select id="symptoms">
+      <option value="" disabled selected>Select your symptom</option>
+      <option value="fever">Fever</option>
+      <option value="headache">Headache</option>
+      <option value="cough">Cough</option>
+      <option value="body pain">Body Pain</option>
+      <option value="cold">Cold</option>
+      <option value="sore throat">Sore Throat</option>
+      <option value="stomach ache">Stomach Ache</option>
+      <option value="allergy">Allergy</option>
+    </select>
+    <input type="text" id="temperature" placeholder="Enter your temperature (e.g., 98.6°F)" />
+    <button onclick="predictMedicine()">Predict Medicine</button>
+  </div>
+
+  <!-- Medicine grid -->
+  <div class="medicine-grid" id="medicine-grid">
+    <!-- Medicine cards will be dynamically added here -->
+  </div>
+
+  <!-- Cart Modal -->
+  <div id="cart-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Your Cart</h2>
+      <div id="cart-items">
+        <!-- Cart items will be dynamically added here -->
+      </div>
+      <button onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>📞 +1234567890 | 📧 healthcare@example.com</p>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function predictMedicine() {
+      const symptom = document.getElementById('symptoms').value;
+      const temperature = document.getElementById('temperature').value;
+
+      if (!symptom || !temperature) {
+        alert('Please select a symptom and enter your temperature.');
+        return;
+      }
+
+      const medicineGrid = document.getElementById('medicine-grid');
+      medicineGrid.innerHTML = ''; // Clear previous results
+
+      let medicine = '';
+      let description = '';
+      let imageUrl = '';
+
+      // Predict medicine based on symptom
+      if (symptom === 'fever') {
+        medicine = 'Paracetamol';
+        description = 'Used for fever and mild pain relief.';
+        imageUrl = 'https://cdn.aerohealthcare.com/wp-content/uploads/2024/09/HV20G_01_1000px_5ba9ff294055adc7ededeb1c9f94f71d-600x600.png';
+      } else if (symptom === 'headache') {
+        medicine = 'Ibuprofen';
+        description = 'Anti-inflammatory and pain relief.';
+        imageUrl = 'https://5.imimg.com/data5/SELLER/Default/2023/7/325863554/WI/JM/SY/135658020/ibuprofen-tablets-ip-200-mg-.jpg';
+      } else if (symptom === 'cough') {
+        medicine = 'Cough Syrup';
+        description = 'Relieves cough and throat irritation.';
+        imageUrl = 'https://images.apollo247.in/pub/media/catalog/product/b/e/ben0006_2.jpg';
+      } else if (symptom === 'body pain') {
+        medicine = 'Aspirin';
+        description = 'Relieves body pain and inflammation.';
+        imageUrl = 'https://www.nahdionline.com/_next/image?url=https%3A%2F%2Fecombe.nahdionline.com%2Fmedia%2Fcatalog%2Fproduct%2F1%2F0%2F101177956_smallimage_9_small_.png%3Fwidth%3D500%26height%3D500%26canvas%3D500%2C500%26optimize%3Dhigh%26bg-color%3D255%2C255%2C255%26fit%3Dbounds&w=256&q=75';
+      } else if (symptom === 'cold') {
+        medicine = 'Antihistamine';
+        description = 'Relieves cold and allergy symptoms.';
+        imageUrl = 'https://tiimg.tistatic.com/fp/1/007/953/antihistamine-chlorophenamine-maleate-4mg-tablets-445.jpg';
+      } else if (symptom === 'sore throat') {
+        medicine = 'Lozenges';
+        description = 'Soothes sore throat and irritation.';
+        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBD4j7sFtDvk0T8zloQvaa56hp03pcRXefIg&s';
+      } else if (symptom === 'stomach ache') {
+        medicine = 'Antacid';
+        description = 'Relieves stomach ache and acidity.';
+        imageUrl = 'https://images-cdn.ubuy.co.in/64c1fcd40d532810824d07bd-equate-ultra-strength-antacid-tablets.jpg';
+      } else if (symptom === 'allergy') {
+        medicine = 'Cetirizine';
+        description = 'Relieves allergy symptoms.';
+        imageUrl = 'https://medino-product.imgix.net/teva-cetirizine-10mg-hay-fever-allergy-relief-30-tablets-b9ce9411.png?h=350&w=350&fit=fill&bg=FFF&auto=format&q=90';
+      }
+
+      // Add medicine card to the grid
+      const card = `
+        <div class="medicine-card">
+          <img src="${imageUrl}" alt="${medicine}" />
+          <h3>${medicine}</h3>
+          <p>${description}</p>
+          <button onclick="addToCart('${medicine}')">Add to Cart</button>
+        </div>
+      `;
+      medicineGrid.innerHTML = card;
+    }
+
+    function addToCart(medicine) {
+      cart.push({ medicine });
+      alert(`${medicine} has been added to your cart.`);
+    }
+
+    function showCart() {
+      const modal = document.getElementById('cart-modal');
+      const cartItems = document.getElementById('cart-items');
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = '<p>Your cart is empty. Please add medicines to your cart.</p>';
+      } else {
+        cartItems.innerHTML = cart
+          .map(item => `<p>1x ${item.medicine}</p>`)
+          .join('');
+      }
+
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('cart-modal');
+      modal.style.display = 'none';
+    }
+
+    function placeOrder() {
+      alert('Request has been forwarded to the health center and is being reviewed.');
+      cart = []; // Clear the cart
+      closeModal(); // Close the modal
+    }
+  </script>
+</body>
+</html>

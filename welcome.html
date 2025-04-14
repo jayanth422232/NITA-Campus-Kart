@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Kart - NIT Andhra Pradesh</title>
+    <link rel="stylesheet" href="./project.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        .promo-banner {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        section {
+            margin: 40px auto;
+            width: 80%;
+        }
+        .feature-box {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+        }
+        .feature-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .dark-mode .feature-box {
+            background: #1e1e1e;
+            color: #fff;
+        }
+        .feature-image {
+            width: 100px;
+            height: 100px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .dark-mode-toggle {
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+        }
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        #contact{
+            background-color:#28a745;
+            font-size: x-large;
+            color: #ffffff;
+        }
+        .collection{
+            display:flex;
+        }
+        .nav-links{
+            margin-left:500px;
+            margin-top:10px;
+        }
+       a{
+        text-decoration: none;
+        color:white;
+       }
+    
+    </style>
+</head>
+<body>
+    <header>
+        <div class="collection">
+        <h1 style="margin-left:200px"><div id="spacer"></div>Welcome to Campus Kart</h1>
+        <div class="nav-links">
+            <a href="#">Login</a>
+            <a href="#contact">Contact</a>
+        </div>
+        </div>
+    </header>
+    <div class="promo-banner">🔥 Limited Offer: Get 50% OFF using code <strong>50</strong>! 🔥</div>
+    <section>
+        <div class="feature-box">
+            <h2>📦 Convenient Egg Delivery</h2>
+            <p>Walking all the way to a store just for eggs? Not anymore! Campus Kart lets you order brown or white eggs in your preferred quantity and have them delivered directly to your room. An OTP-based system ensures secure and hassle-free delivery.</p>
+        </div>
+        <div class="feature-box">
+            <h2>📢 Student Marketplace</h2>
+            <p>Need to sell your extra lab records, workshop coats, or mess coupons? Our marketplace lets students upload pictures of their items, set a price, and find buyers easily. A small 10% commission supports platform maintenance.</p>
+        </div>
+        <div class="feature-box">
+            <h2>🛏️ Freshers' Starter Pack</h2>
+            <p>New to campus? We've bundled essential items like a bed, chair, laundry basket, and cloth rope into a ready-to-order pack. One tap, and all necessities will be delivered before you even step foot on campus!</p>
+        </div>
+        <div class="feature-box">
+            <h2>🏥 On-Demand Medical Assistance</h2>
+            <p>Falling sick but too weak to walk to the health center? Our platform enables quick online consultations with the campus doctor, followed by doorstep delivery of prescribed medicines at no extra cost.</p>
+        </div>
+        <div class="feature-box">
+            <h2>🎉 Festival-Specific Products</h2>
+            <p>Celebrate festivals hassle-free! Order colors for Holi, crackers for Diwali, and other festival-specific items conveniently through Campus Kart.</p>
+        </div>
+        <div class="feature-box">
+            <h2>❌ Cancel Order Within 5 Minutes</h2>
+            <p>Changed your mind? No worries! You can cancel your order within 5 minutes of placing it for a full refund.</p>
+        </div>
+        <button>🚨 Emergency Order</button>
+        <button>👤 <a href="./user_signup.html">Get Started as a User</a></button>
+        <button>🛠️<a href="./admin_signup.html"> Get Started as an Admin</a></a></button>
+    </section>
+    <div class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <p>Email: <a href="mailto:422229@student.nitandhra.ac.in">422229@student.nitandhra.ac.in</a></p>
+        <p>Phone: <a href="tel:+919686824871">+91 9686824871</a></p>
+        <p>Follow us on <a href="#">Instagram</a> | <a href="#">WhatsApp</a></p>
+    </div>
+    <div class="chatbot">💬</div>
+    <button class="dark-mode-toggle">🌙 Dark Mode</button>
+    <script>
+        document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>

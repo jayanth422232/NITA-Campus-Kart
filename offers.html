@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offers</title>
+  <link rel="stylesheet" href="./project.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .offers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .offer {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .offer img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .offer p {
+      margin: 10px 0 0;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: #007bff;">Available Offers</h1>
+  <div class="offers-container" id="offers-container"></div>
+
+  <script>
+    function loadOffers() {
+      // Retrieve offers from localStorage
+      const offers = JSON.parse(localStorage.getItem("offers")) || [];
+
+      const offersContainer = document.getElementById("offers-container");
+
+      if (offers.length === 0) {
+        offersContainer.innerHTML = "<p>No offers available.</p>";
+        return;
+      }
+
+      // Generate HTML for each offer
+      offers.forEach(offer => {
+        const offerDiv = document.createElement("div");
+        offerDiv.className = "offer";
+
+        const offerImage = document.createElement("img");
+        offerImage.src = offer.image;
+        offerImage.alt = "Offer Image";
+
+        const offerText = document.createElement("p");
+        offerText.innerText = offer.text;
+
+        offerDiv.appendChild(offerImage);
+        offerDiv.appendChild(offerText);
+
+        offersContainer.appendChild(offerDiv);
+      });
+    }
+
+    // Load offers on page load
+    window.onload = loadOffers;
+  </script>
+</body>
+</html>

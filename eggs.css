@@ -1,0 +1,264 @@
+/* General Body Styles */
+body {
+    background-image: url("./eggs.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align all elements */
+    gap: 20px; /* Add spacing between elements */
+}
+
+/* Container for Layout */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align elements to the left */
+    gap: 20px; /* Add spacing between elements */
+    width: 90%;
+    max-width: 1200px; /* Increase max width for better layout */
+    padding: 20px;
+}
+
+/* Menu Grid */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    width: 100%; /* Ensure it spans the container width */
+    margin-left: 50px; /* Shift menu cards to the right */
+}
+
+/* Menu Card */
+.menu-card {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideIn 2s ease-out forwards; /* Apply the slide-in animation */
+    opacity: 0; /* Start with opacity 0 */
+    max-height: 350px; /* Restrict the height of menu cards */
+    text-align: center;
+}
+
+/* Slide-in Animation for Menu Cards */
+.menu-card:nth-child(1) {
+    animation-delay: 2s; /* Delay for the first card */
+}
+
+.menu-card:nth-child(2) {
+    animation-delay: 3s; /* Delay for the second card */
+}
+
+/* Menu Card Hover Effect */
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.menu-card img {
+    width: 100%;
+    height: 100px; /* Restrict image height */
+    object-fit: cover;
+}
+
+.menu-card h3 {
+    margin: 10px;
+    color: #007bff;
+}
+
+.menu-card p {
+    margin: 10px;
+    color: #555;
+}
+
+.menu-card .price {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.menu-card .star-rating {
+    color: #f4c430;
+}
+
+.menu-card .reviews {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.menu-card .btn {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-card .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Slide-in Div for Buttons */
+.slide-in-div,
+.slide-in-div1,
+.slide-in-div2,
+.slide-in-div3,
+.slide-in-div4 {
+    width: 300px;
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: center;
+    animation: slideIn 2s ease-out forwards;
+    opacity: 0; /* Start with opacity 0 */
+    margin: 10px auto; /* Center the divs horizontally */
+}
+
+/* Add animation delays for hierarchical sliding */
+.slide-in-div {
+    animation-delay: 1s; /* Slide in first */
+}
+
+.slide-in-div1 {
+    animation-delay: 2s;
+}
+
+.slide-in-div2 {
+    animation-delay: 3s;
+}
+
+.slide-in-div3 {
+    animation-delay: 4s;
+}
+
+.slide-in-div4 {
+    animation-delay: 5s;
+}
+
+/* Input and Button Styling */
+input,
+select,
+button {
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 5px;
+    border: none;
+}
+
+/* Button Styling */
+button {
+    background-color: #ffcc00;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff9900;
+}
+
+/* Cart and Bill Display */
+#cartDisplay,
+#billDisplay {
+    background: white;
+    color: black;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-height: 150px;
+    overflow-y: auto;
+    max-width: 90%;
+    width: 300px;
+    margin-right: 50px; /* Shift cart and bill closer to the menu cards */
+}
+
+/* Ensure Scrollbar for Overflow */
+#cartDisplay {
+    max-height: 200px;
+}
+
+#billDisplay {
+    max-height: 250px;
+}
+
+/* Slide-in Animation */
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100vw);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above other elements */
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Modal Content */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Modal Buttons */
+.modal button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffcc00;
+    color: black;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.modal button:hover {
+    background-color: #ff9900;
+}
+
+/* Modal Background Overlay */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Ensure it appears below the modal */
+}

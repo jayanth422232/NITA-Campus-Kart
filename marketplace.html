@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace</title>
+  <link rel="stylesheet" href="marketplace.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 1000px;
+}
+#search-input{
+  width:570px;
+
+}
+.search-bar input {
+  width: 100%;
+  padding: 8px 35px 8px 10px; /* Add padding-right for the GIF */
+  border: none;
+  border-radius: 5px;
+}
+
+.search-bar img {
+  position: absolute;
+  right: 10px; /* Align the GIF to the right end */
+  height: 20px;
+  pointer-events: none; /* Prevent the GIF from blocking input clicks */
+}
+    /* General Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    background-image: url("marketback.gif");
+    background-size: cover;  /* Ensures the image covers the entire screen */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    background-attachment: fixed; /* Keeps background fixed while scrolling */
+    color: white;
+}
+    
+
+    /* Navbar Styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #007bff;
+      padding: 10px 20px;
+      color: white;
+    }
+
+    .navbar .logo img {
+      height: 50px;
+    }
+
+    .navbar .search-bar input {
+      width: 300px;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .navbar .nav-icons img {
+      height: 30px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+
+    .navbar .login-btn {
+      background-color: white;
+      color: #007bff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .navbar .login-btn:hover {
+      background-color: #0056b3;
+      color: white;
+    }
+
+    /* Filters Section */
+    .filters {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .filters select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 0 10px;
+    }
+
+    .filters button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .filters button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Items Section */
+    .items-page {
+      padding: 20px;
+    }
+
+    .items-page h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .item-card {
+  background: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Semi-transparent border */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly darker shadow for contrast */
+  overflow: hidden;
+  text-align: center;
+  padding: 15px;
+}
+
+.filters {
+  background: rgba(0, 123, 255, 0.8); /* Blue background with 80% opacity */
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.footer {
+  background-color: rgba(0, 123, 255, 0.9); /* Footer with 90% opacity */
+}
+
+    .item-card img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .item-card h3 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .item-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .item-card .btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .item-card .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Footer Styling */
+    .footer {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .footer .footer-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .footer-section {
+      margin: 10px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin: 5px 0;
+    }
+
+    .footer-section ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-section ul li a:hover {
+      text-decoration: underline;
+    }
+    /* Profile Menu Styling */
+/* Profile Menu Styling */
+.profile-menu {
+  position: fixed;
+  top: 0;
+  right: -300px; /* Initially hidden */
+  width: 300px;
+  height: 100%;
+  background-color: #007bff;
+  color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+
+.profile-menu-content {
+  padding: 20px;
+}
+
+.profile-menu h2 {
+  margin-top: 0;
+}
+
+.profile-menu button {
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.profile-menu button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Profile Picture Styling */
+#profile-picture {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#profile-picture img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  margin-top:70px;
+}
+
+#profile-upload {
+  margin-top: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Sell Item Button */
+.sell-item-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 1000;
+}
+
+.sell-item-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Modal Styling */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-content label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal-content button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+
+.modal .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="user_portal.html">
+        <img src="./backbutton.jpg" alt="Back Button">
+      </a>
+      <img src="./companylogo.jpg" alt="CampusKart Logo">
+    </div>
+    <div class="search-bar">
+      <img src="./searchbar2.gif" alt="Search Icon" style="height: 30px; margin-right: 10px;">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search for products, services, and more..."
+        onkeyup="searchItems()"
+      >
+    </div>
+    <div class="nav-icons">
+      <button class="login-btn">Login</button>
+      <img src="./cropped_image.png" alt="Cart" onclick="redirectToCart()">
+      <img src="./profile.webp" alt="Profile" onclick="toggleProfileMenu()">
+    </div>
+  </nav>
+
+  <!-- Filters Section -->
+  <section class="filters">
+    <label for="price-filter">Filter by Price:</label>
+    <select id="price-filter">
+      <option value="all">All</option>
+      <option value="low">Below ₹500</option>
+      <option value="medium">₹500 - ₹2000</option>
+      <option value="high">Above ₹2000</option>
+    </select>
+    <button onclick="applyFilters()">Apply Filters</button>
+  </section>
+
+  <!-- Sell Item Button -->
+<button class="sell-item-btn" onclick="openSellItemModal()">Sell Item</button>
+
+<!-- Sell Item Modal -->
+<div class="modal" id="sell-item-modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeSellItemModal()">&times;</span>
+    <h2>Sell an Item</h2>
+    <form id="sell-item-form">
+      <label for="item-name">Item Name:</label>
+      <input type="text" id="item-name" placeholder="Enter item name" required>
+
+      <label for="item-image">Item Image:</label>
+      <input type="file" id="item-image" accept="image/*" required>
+
+      <label for="item-price">Item Price (₹):</label>
+      <input type="number" id="item-price" placeholder="Enter item price" required>
+   
+      <label for="itemdescription">Item Description:</label>
+      <input type="text" id="itemdescription" placeholder="Enter item description" required>
+     
+      <label for="itemamount">Item Amount:</label>
+      <input type="text" id="itemamount" placeholder="Enter amount of item" required>
+
+      <button type="button" onclick="addNewItem()">Add Item</button>
+    </form>
+  </div>
+</div>
+  <!-- Items Section -->
+  <section class="items-page">
+    <h2>Available Items</h2>
+    <div class="items-grid" id="items-grid">
+      <!-- Example Item Cards -->
+      <div class="item-card" data-price="100">
+        <img src="./drafter.webp" alt="Drafter">
+        <h3>Drafter</h3>
+        <p class="price">Posted Price: ₹100</p>
+        <p class="description">This drafter was used only for a few months and is still in mint condition.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="3000">
+        <img src="./cycle.jpg" alt="Cycle">
+        <h3>Cycle</h3>
+        <p class="price">Posted Price: ₹3,000</p>
+        <p class="description">A well-maintained cycle, perfect for commuting.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="250">
+        <img src="./calc.jpg" alt="Calculator">
+        <h3>Calculator</h3>
+        <p class="price">Posted Price: ₹250</p>
+        <p class="description">Scientific calculator, barely used, in excellent condition.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <!-- Additional Items -->
+      <div class="item-card" data-price="5000">
+        <img src="./gamingchair.avif" alt="Gaming Chair">
+        <h3>Gaming Chair</h3>
+        <p class="price">Posted Price: ₹5,000</p>
+        <p class="description">Ergonomic gaming chair in excellent condition.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="2000">
+        <img src="./bed.webp" alt="Bed">
+        <h3>Bed</h3>
+        <p class="price">Posted Price: ₹2,000</p>
+        <p class="description">Single bed with mattress, lightly used.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="150">
+        <img src="./bucket.webp" alt="Bucket">
+        <h3>Bucket</h3>
+        <p class="price">Posted Price: ₹150</p>
+        <p class="description">10-liter bucket, durable and in good condition.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="300">
+        <img src="./heatingrod.webp" alt="Heating Rod">
+        <h3>Heating Rod</h3>
+        <p class="price">Posted Price: ₹300</p>
+        <p class="description">Electric heating rod, perfect for winter use.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="400">
+        <img src="./labrecord.jpg" alt="Lab Record">
+        <h3>Lab Record</h3>
+        <p class="price">Posted Price: ₹400</p>
+        <p class="description">Pre-filled lab record for engineering students.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="200">
+        <img src="./notes.avif" alt="Notes">
+        <h3>Notes</h3>
+        <p class="price">Posted Price: ₹200</p>
+        <p class="description">Handwritten notes for semester exams.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="1200">
+        <img src="./tablemate.avif" alt="Table Mate">
+        <h3>Table Mate</h3>
+        <p class="price">Posted Price: ₹1,200</p>
+        <p class="description">Adjustable table mate, perfect for studying.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="item-card" data-price="600">
+        <img src="./yogamat.jpg" alt="Yoga Mat">
+        <h3>Yoga Mat</h3>
+        <p class="price">Posted Price: ₹600</p>
+        <p class="description">Non-slip yoga mat, barely used.</p>
+        <p class="amount">Amount remaining: 5</p>
+        <button class="btn add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>support@campuskart.in</p>
+        <p>+91-7255882705</p>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="welcome.html">About Us</a></li>
+          <li><a href="/media">Media Coverage</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>For You</h3>
+        <ul>
+          <li><a href="/contact">Contact Us</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/terms-and-conditions">Terms And Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function applyFilters() {
+      const filterValue = document.getElementById("price-filter").value;
+      const items = document.querySelectorAll(".item-card");
+
+      items.forEach(item => {
+        const price = parseInt(item.getAttribute("data-price"), 10);
+
+        if (
+          filterValue === "all" ||
+          (filterValue === "low" && price < 500) ||
+          (filterValue === "medium" && price >= 500 && price <= 2000) ||
+          (filterValue === "high" && price > 2000)
+        ) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+    function searchItems() {
+  const query = document.getElementById("search-input").value.toLowerCase();
+  const items = document.querySelectorAll(".item-card");
+
+  items.forEach(item => {
+    const itemName = item.querySelector("h3").innerText.toLowerCase();
+    const itemDescription = item.querySelector(".description").innerText.toLowerCase();
+
+    if (itemName.includes(query) || itemDescription.includes(query)) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
+// Redirect to Stationary Cart
+function redirectToCart() {
+  window.location.href = "marketplacecart.html";
+}
+
+// Logout Functionality
+function logout() {
+  alert("You have been logged out.");
+  window.location.href = "user_login.html"; // Redirect to user login page
+}
+// Open the profile menu
+function openProfileMenu() {
+  const profileMenu = document.getElementById('profile-menu');
+  const profileDetails = document.getElementById('profile-details');
+  const profileImg = document.getElementById('profile-img');
+
+  // Retrieve user data from localStorage
+  const userData = JSON.parse(localStorage.getItem('userData')) || {};
+
+  // Helper function to get field value or "NA" if empty
+  const getFieldValue = (field) => (userData[field] ? userData[field] : 'NA');
+
+  // Set profile picture (default if not set)
+  const profilePicture = userData.picture || './profilephoto.png'; // Use saved picture or default
+  profileImg.src = profilePicture;
+
+  // Display user details
+  profileDetails.innerHTML = `
+    <p><strong>Name:</strong> ${getFieldValue('name')}</p>
+    <p><strong>Username:</strong> ${getFieldValue('username')}</p>
+    <p><strong>Email:</strong> ${getFieldValue('emailid')}</p>
+    <p><strong>Roll Number:</strong> ${getFieldValue('rollnumber')}</p>
+    <p><strong>Hostel Name:</strong> ${getFieldValue('hostelname')}</p>
+    <p><strong>Room Number:</strong> ${getFieldValue('roomnumber')}</p>
+    <p><strong>Phone Number:</strong> ${getFieldValue('phonenumber')}</p>
+    <p><strong>UPI ID:</strong> ${getFieldValue('upiid')}</p>
+    <p><strong>Gender:</strong> ${getFieldValue('gender')}</p>
+  `;
+
+  profileMenu.style.right = '0'; // Slide in the menu
+}
+
+// Close the profile menu
+function closeProfileMenu() {
+  const profileMenu = document.getElementById('profile-menu');
+  profileMenu.style.right = '-300px'; // Slide out the menu
+}
+
+// Edit profile details
+function editProfile() {
+  const profile = JSON.parse(localStorage.getItem('userData')) || {};
+  const newName = prompt('Enter your new name:', profile.name || '');
+  const newEmail = prompt('Enter your new email:', profile.emailid || '');
+  const newPhone = prompt('Enter your new phone number:', profile.phonenumber || '');
+
+  if (newName && newEmail && newPhone) {
+    profile.name = newName;
+    profile.emailid = newEmail;
+    profile.phonenumber = newPhone;
+
+    localStorage.setItem('userData', JSON.stringify(profile));
+    alert('Profile updated successfully!');
+    openProfileMenu(); // Refresh the profile details
+  }
+}
+
+// Update profile picture
+function uploadProfilePicture() {
+  const fileInput = document.getElementById('profile-upload');
+  const profileImg = document.getElementById('profile-img');
+
+  if (fileInput.files && fileInput.files[0]) {
+    const reader = new FileReader();
+
+    // Load the selected image and display it
+    reader.onload = function (e) {
+      profileImg.src = e.target.result;
+
+      // Save the image data URL to localStorage
+      const profile = JSON.parse(localStorage.getItem('userData')) || {};
+      profile.picture = e.target.result;
+      localStorage.setItem('userData', JSON.stringify(profile));
+
+      alert('Profile picture updated successfully!');
+    };
+
+    reader.readAsDataURL(fileInput.files[0]); // Read the file as a data URL
+  } else {
+    alert('Please select a file to upload.');
+  }
+}
+
+// Attach event listener to the profile icon
+document.querySelector('.nav-icons img[alt="Profile"]').addEventListener('click', openProfileMenu);
+// Open the Sell Item Modal
+function openSellItemModal() {
+  document.getElementById("sell-item-modal").style.display = "block";
+}
+
+// Close the Sell Item Modal
+function closeSellItemModal() {
+  document.getElementById("sell-item-modal").style.display = "none";
+}
+
+// Add New Item to the Items Grid
+function addNewItem() {
+  const itemName = document.getElementById("item-name").value.trim();
+  const itemImageInput = document.getElementById("item-image");
+  const itemPrice = document.getElementById("item-price").value.trim();
+  const itemAmount = document.getElementById("itemamount").value.trim();
+  const itemdescription=document.getElementById("itemdescription").value.trim();
+  if (!itemName || !itemImageInput.files[0] || !itemPrice) {
+    alert("Please fill out all fields.");
+    return;
+  }
+
+  // Convert the uploaded image to a Base64 string
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const itemImage = event.target.result;
+
+    // Create a new item card
+    const newItem = document.createElement("div");
+    newItem.className = "item-card";
+    newItem.setAttribute("data-price", itemPrice);
+
+    newItem.innerHTML = `
+      <img src="${itemImage}" alt="${itemName}">
+      <h3>${itemName}</h3>
+      <p class="price">Posted Price: ₹${itemPrice}</p>
+      <p class="description">${itemdescription}</p>
+      <p class="amount">Amount remaining: ${itemAmount}</p>
+      <button class="btn add-to-cart">Add to Cart</button>
+    `;
+
+    // Append the new item to the items grid
+    document.getElementById("items-grid").appendChild(newItem);
+
+    // Close the modal and reset the form
+    closeSellItemModal();
+    document.getElementById("sell-item-form").reset();
+
+    alert("Item added successfully!");
+  };
+
+  reader.readAsDataURL(itemImageInput.files[0]);
+}  
+// Add to Cart Functionality
+// Add to Cart Functionality
+document.addEventListener('DOMContentLoaded', function () {
+  const itemsGrid = document.getElementById('items-grid');
+
+  // Delegate event listener to the items grid for dynamic item cards
+  itemsGrid.addEventListener('click', function (event) {
+    if (event.target.classList.contains('add-to-cart')) {
+      const itemCard = event.target.closest('.item-card');
+      const itemName = itemCard.querySelector('h3').innerText;
+      const itemPrice = parseInt(itemCard.getAttribute('data-price'), 10);
+      const amountElement = itemCard.querySelector('.amount');
+      let amountRemaining = parseInt(amountElement.innerText.split(': ')[1], 10);
+
+      // Check if the item is sold out
+      if (amountRemaining <= 0) {
+        alert("Item unavailable and sold out");
+        return;
+      }
+
+      // Reduce the amount remaining by 1
+      amountRemaining -= 1;
+      amountElement.innerText = `Amount remaining: ${amountRemaining}`;
+
+      // Add the item to the cart
+      const cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+      if (cart[itemName]) {
+        cart[itemName].quantity += 1; // Increment quantity
+      } else {
+        cart[itemName] = {
+          name: itemName,
+          price: itemPrice,
+          quantity: 1
+        };
+      }
+
+      // Save the updated cart to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Show success alert if the item is still available
+      if (amountRemaining > 0) {
+        alert(`${itemName} has been added to your cart!`);
+      } else {
+        alert("Item unavailable and sold out");
+      }
+    }
+  });
+});
+  </script>
+  <div class="profile-menu" id="profile-menu">
+    <div class="profile-menu-content">
+      <div id="profile-picture">
+        <img id="profile-img" src="./profilephoto.png" alt="Profile Picture">
+        <input type="file" id="profile-upload" accept="image/*" onchange="uploadProfilePicture()">
+      </div>
+      <h2>Your Profile</h2>
+      <div id="profile-details">
+        <!-- User details will be dynamically loaded here -->
+      </div>
+      <button onclick="editProfile()">Edit Profile</button>
+      <button onclick="closeProfileMenu()">Close</button>
+    </div>
+  </div>
+</body>
+</html>

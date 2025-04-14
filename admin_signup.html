@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <link rel="stylesheet" href="./project.css">
+</head>
+<style>
+     /* ========== Glassmorphism Form ========== */
+form#admin-registration-form {
+    background: rgba(255, 255, 255, 0.15); /* semi-transparent white */
+    backdrop-filter: blur(12px); /* glass effect */
+    -webkit-backdrop-filter: blur(12px);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 600px;
+    margin: 40px auto;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeInForm 1s ease;
+}
+
+/* ========== Label & Input Styling ========== */
+form#admin-registration-form label {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+form#admin-registration-form input,
+form#admin-registration-form select {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    backdrop-filter: blur(5px);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+form#admin-registration-form input:focus,
+form#admin-registration-form select:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    transform: scale(1.02);
+}
+
+/* ========== Submit Button ========== */
+form#admin-registration-form input[type="submit"] {
+    background-color: rgba(94, 158, 214, 0.7);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form#admin-registration-form input[type="submit"]:hover {
+    background-color: rgba(94, 158, 214, 0.9);
+    transform: scale(1.05);
+}
+
+/* ========== Fade-In for Entire Form ========== */
+@keyframes fadeInForm {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ========== Slide + Fade Animation for Elements ========== */
+@keyframes slideFadeIn {
+    0%   { opacity: 0; transform: translateY(20px); }
+    60%  { opacity: 1; transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+form#admin-registration-form > * {
+    
+    animation: slideFadeIn 0.6s ease-out forwards;
+}
+
+/* ========== Staggered Animation ========== */
+form#admin-registration-form > *:nth-child(1)  { animation-delay: 0.1s; }
+form#admin-registration-form > *:nth-child(2)  { animation-delay: 0.2s; }
+form#admin-registration-form > *:nth-child(3)  { animation-delay: 0.3s; }
+form#admin-registration-form > *:nth-child(4)  { animation-delay: 0.4s; }
+form#admin-registration-form > *:nth-child(5)  { animation-delay: 0.5s; }
+form#admin-registration-form > *:nth-child(6)  { animation-delay: 0.6s; }
+form#admin-registration-form > *:nth-child(7)  { animation-delay: 0.7s; }
+form#admin-registration-form > *:nth-child(8)  { animation-delay: 0.8s; }
+form#admin-registration-form > *:nth-child(9)  { animation-delay: 0.9s; }
+form#admin-registration-form > *:nth-child(10) { animation-delay: 1.0s; }
+form#admin-registration-form > *:nth-child(11) { animation-delay: 1.1s; }
+form#admin-registration-form > *:nth-child(12) { animation-delay: 1.2s; }
+form#admin-registration-form > *:nth-child(13) { animation-delay: 1.3s; }
+form#admin-registration-form > *:nth-child(14) { animation-delay: 1.4s; }
+form#admin-registration-form > *:nth-child(15) { animation-delay: 1.5s; }
+form#admin-registration-form > *:nth-child(16) { animation-delay: 1.6s; }
+form#admin-registration-form > *:nth-child(17) { animation-delay: 1.7s; }
+form#admin-registration-form > *:nth-child(18) { animation-delay: 1.8s; }
+form#admin-registration-form > *:nth-child(19) { animation-delay: 1.9s; }
+form#admin-registration-form > *:nth-child(20) { animation-delay: 2.0s; }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        body{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size:large
+        }
+        #submit {
+    border-radius: 10%;
+    background-color: aqua;
+    width: 200px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: xx-large;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+#submit:hover {
+    background-color: #00cccc; /* Slightly darker aqua */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    cursor: pointer;
+}
+
+</style>
+<body>
+    <header>
+        <h1>Admin Registration</h1>
+    </header>
+    <section>
+        <form id="admin-registration-form" novalidate>
+            <label for="type">Type (canteen or stationary):</label>
+            <input type="text" id="type" name="type" required><br><br>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="phonenumber">Phone Number:</label>
+            <input type="tel" id="phonenumber" name="phonenumber" required><br><br>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <input type="submit" value="Register">
+        </form>
+    </section>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("admin-registration-form");
+
+    // Input fields
+    const typeInput = document.getElementById("type");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phonenumber");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+
+    // Helper functions for validation
+    function createErrorMessage(inputField, message) {
+        let existingError = inputField.nextElementSibling;
+        if (existingError && existingError.classList.contains("error-message")) {
+            existingError.textContent = message;
+        } else {
+            let errorSpan = document.createElement("span");
+            errorSpan.className = "error-message";
+            errorSpan.style.color = "red";
+            errorSpan.textContent = message;
+            inputField.insertAdjacentElement("afterend", errorSpan);
+        }
+    }
+
+    function clearErrorMessage(inputField) {
+        let existingError = inputField.nextElementSibling;
+        if (existingError && existingError.classList.contains("error-message")) {
+            existingError.remove();
+        }
+    }
+
+    function validateField(inputField, condition, message) {
+        if (!condition) {
+            createErrorMessage(inputField, message);
+            return false;
+        } else {
+            clearErrorMessage(inputField);
+            return true;
+        }
+    }
+    typeInput.addEventListener("blur", function () {
+        validateField(typeInput, typeInput.value.trim() !== "" && (typeInput.value === "canteen" || typeInput.value === "stationary"),
+            "Type must be either 'canteen' or 'stationary'.");
+    });
+
+    nameInput.addEventListener("blur", function () {
+        validateField(nameInput, nameInput.value.trim() !== "" && nameInput.value.length <= 50,
+            "Name must not be empty and should be less than 50 characters.");
+    });
+
+    emailInput.addEventListener("blur", function () {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        validateField(emailInput, emailRegex.test(emailInput.value.trim()),
+            "Invalid email format.");
+    });
+
+    phoneInput.addEventListener("blur", function () {
+        const phoneRegex = /^\+91\d{10}$/;
+        validateField(phoneInput, phoneRegex.test(phoneInput.value.trim()),
+            "Phone number must be in the format +911234567890.");
+    });
+
+    usernameInput.addEventListener("blur", function () {
+        const usernameRegex = /^[a-zA-Z0-9_]{5,20}$/;
+        validateField(usernameInput, usernameRegex.test(usernameInput.value.trim()),
+            "Username must be 5-20 characters long and can only contain letters, numbers, and underscores.");
+    });
+
+    passwordInput.addEventListener("blur", function () {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+        validateField(passwordInput, passwordRegex.test(passwordInput.value.trim()),
+            "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
+    });
+
+    // Validation logic
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form submission
+
+        let isValid = true;
+
+        // Type validation
+        if (!validateField(typeInput, typeInput.value.trim() !== "" && (typeInput.value === "canteen" || typeInput.value === "stationary"),
+            "Type must be either 'canteen' or 'stationary'.")) {
+            isValid = false;
+        }
+
+        // Name validation
+        if (!validateField(nameInput, nameInput.value.trim() !== "" && nameInput.value.length <= 50,
+            "Name must not be empty and should be less than 50 characters.")) {
+            isValid = false;
+        }
+
+        // Email validation
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!validateField(emailInput, emailRegex.test(emailInput.value.trim()),
+            "Invalid email format.")) {
+            isValid = false;
+        }
+
+        // Phone number validation
+        const phoneRegex = /^\+91\d{10}$/;
+        if (!validateField(phoneInput, phoneRegex.test(phoneInput.value.trim()),
+            "Phone number must be in the format +911234567890.")) {
+            isValid = false;
+        }
+
+        // Username validation
+        const usernameRegex = /^[a-zA-Z0-9_]{5,20}$/;
+        if (!validateField(usernameInput, usernameRegex.test(usernameInput.value.trim()),
+            "Username must be 5-20 characters long and can only contain letters, numbers, and underscores.")) {
+            isValid = false;
+        }
+
+        // Password validation
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+        if (!validateField(passwordInput, passwordRegex.test(passwordInput.value.trim()),
+            "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.")) {
+            isValid = false;
+        }
+
+        // Final validation check
+        if (!isValid) {
+            alert("Please fix the errors in the form before submitting.");
+            return;
+        }
+
+        // If all validations pass
+        alert("Validation passed! Registration successful.");
+        window.location.href="admin_login.html"// You can now store the data or redirect the user
+    
+
+let adminData = JSON.parse(localStorage.getItem("adminData")) || []; // Retrieve existing data or initialize an empty array
+
+let newAdmin = {
+    type: typeInput.value,
+    name: nameInput.value,
+    email: emailInput.value,
+    phonenumber: phoneInput.value,
+    username: usernameInput.value,
+    password: passwordInput.value,
+};
+
+adminData.push(newAdmin); // Add the new admin to the array
+
+localStorage.setItem("adminData", JSON.stringify(adminData)); // Save the updated array back to localStorage
+});
+}); </script>
+</body>
+</html>

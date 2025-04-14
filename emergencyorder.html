@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Order</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+        #roomnumber{
+            color:black;
+        }
+         
+    </style>
+</head>
+<body>
+   <div class="collection">
+    <div class="container">
+        <h2>Emergency Order</h2>
+        <input type="text" id="search" placeholder="Search for medicines or food..." list="items">
+        <datalist id="items">
+            <option value="Paracetamol (Medicine)"></option>
+            <option value="Bandages (First Aid)"></option>
+            <option value="ORS Packets"></option>
+            <option value="Dolo 650 (Fever Relief)"></option>
+            <option value="Rice & Dal (Food)"></option>
+            <option value="Vegetable Sandwich (Food)"></option>
+            <option value="Curd Rice (Food)"></option>
+        </datalist>
+
+        <select id="payment">
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="COD">Cash on Delivery</option>
+            <option value="GPay">Google Pay</option>
+            <option value="UPI">UPI</option>
+        </select>
+
+        <button id="placeOrder">Place Order</button>
+        <p id="message" class="hidden"></p>
+    </div>
+    <div style="margin-top:40px">
+        <marquee>Emergency orders will only be delivered directly to your rooms </marquee>
+        <div id="roomnumber"></div>
+    </div>
+</div>
+        <script>
+  const roomNumber = localStorage.getItem("userData.roomnumber");
+  document.getElementById("roomnumber").innerHTML = "room number: " + roomNumber;
+
+        // Check if the user has already placed an emergency order
+        const hasOrdered = localStorage.getItem("emergencyOrderPlaced");
+
+        if (hasOrdered) {
+            document.getElementById("placeOrder").disabled = true;
+            document.getElementById("message").textContent = "You can place only one emergency order.";
+            document.getElementById("message").classList.remove("hidden");
+        }
+
+        document.getElementById("placeOrder").addEventListener("click", function() {
+            const item = document.getElementById("search").value;
+            const payment = document.getElementById("payment").value;
+
+            if (!item) {
+                alert("Please select a medicine or food item.");
+                return;
+            }
+            if (!payment) {
+                alert("Please select a payment method.");
+                return;
+            }
+
+            alert(`Emergency order placed successfully for "${item}" using ${payment}!`);
+
+            // Save in local storage to restrict further orders
+            localStorage.setItem("emergencyOrderPlaced", true);
+
+            document.getElementById("placeOrder").disabled = true;
+            document.getElementById("placeOrder").onclick=function(){
+                alert("Order Placed")
+            }
+            document.getElementById("message").textContent = "You have used your emergency order.";
+            document.getElementById("message").classList.remove("hidden");
+        });
+    </script>
+
+</body>
+</html>

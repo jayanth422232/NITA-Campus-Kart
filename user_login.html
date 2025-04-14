@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            font-family: 'Segoe UI', sans-serif;
+            font-size: large;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        form#user-login-form {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            margin: 40px auto;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInForm 1s ease;
+        }
+
+        form#user-login-form label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        form#user-login-form input {
+            width: 100%;
+            padding: 12px 14px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            backdrop-filter: blur(5px);
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        form#user-login-form input:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            transform: scale(1.02);
+        }
+
+        form#user-login-form input[type="submit"] {
+            background-color: rgba(94, 158, 214, 0.7);
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            margin-top: 30px;
+            cursor: pointer;
+            font-size: large;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        form#user-login-form input[type="submit"]:hover {
+            background-color: rgba(94, 158, 214, 0.9);
+            transform: scale(1.05);
+        }
+
+        header h1 {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        section a {
+            color: #fff;
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        @keyframes fadeInForm {
+            from { opacity: 0; transform: scale(0.95); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideFadeIn {
+            0%   { opacity: 0; transform: translateY(20px); }
+            60%  { opacity: 1; transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        form#user-login-form > * {
+            animation: slideFadeIn 0.6s ease-out forwards;
+        }
+
+        form#user-login-form > *:nth-child(1)  { animation-delay: 0.1s; }
+        form#user-login-form > *:nth-child(2)  { animation-delay: 0.2s; }
+        form#user-login-form > *:nth-child(3)  { animation-delay: 0.3s; }
+        form#user-login-form > *:nth-child(4)  { animation-delay: 0.4s; }
+        form#user-login-form > *:nth-child(5)  { animation-delay: 0.5s; }
+        form#user-login-form > *:nth-child(6)  { animation-delay: 0.6s; }
+        body {
+    background-image: url("back.gif");
+    background-size: cover;  /* Ensures the image covers the entire screen */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    background-attachment: fixed; /* Keeps background fixed while scrolling */
+    color: white;
+}
+   </style>
+</head>
+<body>
+    <header>
+        <h1>User Login</h1>
+    </header>
+    <section>
+        <form id="user-login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <a href="forgotpassword.html">Forgot Password?</a>
+
+            <input type="submit" value="Login">
+        </form>
+    </section>
+
+    <script>
+      
+      document.getElementById('user-login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    const userData = JSON.parse(localStorage.getItem("userData")); // get data from "userData" key
+
+    if (!userData || userData.username !== username) {
+        alert("Username not found! Please check your username or sign up.");
+        return;
+    }
+
+    if (userData.password === password) {
+        alert("Login successful!");
+        window.location.href = 'user_portal.html';
+    } else {
+        alert("Incorrect password. Please try again.");
+    }
+});
+
+
+    </script>
+</body>
+</html>

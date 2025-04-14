@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Delivery Communication</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-image: url("back.gif");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      width: 100%;
+      max-width: 480px;
+      padding: 24px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .loader-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .loader-container {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .loader {
+      width: 80px;
+      height: 80px;
+      border: 8px solid #e0e0e0;
+      border-top: 8px solid #fc8019;
+      border-radius: 50%;
+      animation: spin 2s linear forwards;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      33.3% { transform: rotate(360deg); }
+      66.6% { transform: rotate(720deg); }
+      100% { transform: rotate(1080deg); }
+    }
+
+    .loader-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      opacity: 0;
+      animation: fadeText 6s linear forwards;
+    }
+
+    @keyframes fadeText {
+      0%, 16.6% { opacity: 1; }
+      33.3%, 49.9% { opacity: 1; }
+      66.6%, 100% { opacity: 1; }
+    }
+
+    .tick-mark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: #2ecc71;
+      display: none;
+    }
+
+    .pop-in {
+      animation: popIn 0.5s ease forwards;
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .fade-in {
+      animation: fadeInDetails 1s ease forwards;
+    }
+
+    @keyframes fadeInDetails {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .details-card {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease;
+    }
+
+    .details-card:hover {
+      transform: scale(1.01);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .detail-label {
+      color: #444;
+    }
+
+    .detail-value {
+      color: #222;
+      font-weight: 500;
+    }
+
+    .edit-button {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(252, 128, 25, 0.1);
+      border: 1px solid #fc8019;
+      color: #fc8019;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .edit-button:hover {
+      background: rgba(252, 128, 25, 0.2);
+    }
+
+    .edit-form {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .edit-form.active {
+      display: block;
+    }
+
+    .edit-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .edit-form button {
+      background: #fc8019;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    .edit-form button.cancel {
+      background: #666;
+    }
+
+    .otp-section {
+      text-align: center;
+    }
+
+    .otp-input {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    .otp-input input {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .otp-input input:focus {
+      border-color: #fc8019;
+      outline: none;
+    }
+
+    .button {
+      background: #fc8019;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .button:hover {
+      background: #e67112;
+    }
+
+    .chat-section {
+      margin-top: 24px;
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      padding-top: 24px;
+    }
+
+    .chat-messages {
+      height: 200px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .message {
+      margin-bottom: 12px;
+      max-width: 80%;
+    }
+
+    .message.sent {
+      margin-left: auto;
+    }
+
+    .message-content {
+      padding: 10px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    .message.received .message-content {
+      background: white;
+      border: 1px solid #ddd;
+      color:black;
+    }
+
+    .message.sent .message-content {
+      background: #fc8019;
+      color: white;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    .chat-input button {
+      padding: 12px 24px;
+    }
+
+    .phone-link {
+      color: #fc8019;
+      text-decoration: none;
+    }
+
+    .phone-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader-wrapper">
+      <div class="loader-container">
+        <div class="loader" id="loader"></div>
+        <div class="tick-mark" id="tickMark">&#10004;</div>
+      </div>
+      <div class="loader-text" id="loaderText">Preparing</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Delivery Partner Details</div>
+      <div class="details-card" id="partnerDetails" style="display: none;">
+        <div class="detail-row"><span class="detail-label">Name:</span><span class="detail-value" id="partnerName"></span></div>
+        <div class="detail-row"><span class="detail-label">Phone:</span><span class="detail-value"><a href="#" class="phone-link" id="partnerPhone"></a></span></div>
+        <div class="detail-row"><span class="detail-label">Rating:</span><span class="detail-value" id="partnerRating"></span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Delivery Address</div>
+      <div class="details-card">
+        <button class="edit-button" onclick="toggleEditAddress()">Edit</button>
+        <div class="detail-row"><span class="detail-label">Name:</span><span class="detail-value" id="userName">Alice Smith</span></div>
+        <div class="detail-row"><span class="detail-label">Room No:</span><span class="detail-value" id="userRoom">Room 403</span></div>
+        <div class="detail-row"><span class="detail-label">Phone:</span><span class="detail-value" id="userPhone">+1 234-567-8900</span></div>
+        <div class="edit-form" id="editForm">
+          <input type="text" id="editName" placeholder="Name">
+          <input type="text" id="editRoom" placeholder="Room No">
+          <input type="tel" id="editPhone" placeholder="Phone Number">
+          <button onclick="saveAddress()">Save</button>
+          <button class="cancel" onclick="toggleEditAddress()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section otp-section">
+      <div class="section-title">Enter Delivery OTP</div>
+      <div class="otp-input">
+        <input type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+      </div>
+      <button class="button" id="otp" onclick="verifyOTP()">Share OTP</button>
+    </div>
+
+    <div class="chat-section">
+        <div class="section-title">Chat with Delivery Partner</div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message received">
+                <div class="message-content">Hi, I'm on my way with your order!</div>
+            </div>
+            <div class="message sent">
+                <div class="message-content">Great! Please call when you reach.</div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message..." id="messageInput">
+            <button class="button" style="width: auto;">Send</button>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loaderText = document.getElementById('loaderText');
+      const textSequence = ["Sending request...", "Request accepted", "On the way to room"];
+      let index = 0;
+  
+      function showNextText() {
+        if (index < textSequence.length) {
+          loaderText.textContent = textSequence[index];
+          index++;
+          setTimeout(showNextText, 2000);
+        } else {
+          document.getElementById('loader').style.display = 'none';
+          const tick = document.getElementById('tickMark');
+          tick.style.display = 'block';
+          tick.classList.remove('pop-in');
+          void tick.offsetWidth;
+          tick.classList.add('pop-in');
+        }
+      }
+  
+      // Delivery partner appears after loader finishes
+      setTimeout(() => {
+        document.getElementById('partnerName').textContent = 'John Doe';
+        document.getElementById('partnerPhone').textContent = '+91 98765 43210';
+        document.getElementById('partnerPhone').href = 'tel:+919876543210';
+        document.getElementById('partnerRating').textContent = '4.8 ⭐';
+        const partnerDetails = document.getElementById('partnerDetails');
+        partnerDetails.style.display = 'block';
+        partnerDetails.classList.add('fade-in');
+      }, 8000);
+      
+      // Auto move OTP inputs
+      const otpInputs = document.querySelectorAll('.otp-input input');
+      otpInputs.forEach((input, index) => {
+        input.addEventListener('keyup', (e) => {
+          if (e.key >= 0 && e.key <= 9) {
+            input.value = e.key;
+            if (index < otpInputs.length - 1) otpInputs[index + 1].focus();
+          } else if (e.key === 'Backspace') {
+            input.value = '';
+            if (index > 0) otpInputs[index - 1].focus();
+          }
+        });
+      });
+  
+      // OTP Share button
+      document.getElementById('otp').addEventListener('click', () => {
+        const otp = Array.from(otpInputs).map(i => i.value).join('');
+        if (otp.length === 4) {
+          index = 0;
+          showNextText();
+        } else {
+          alert('Please enter a valid 4-digit OTP');
+        }
+      });
+  
+      const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = messageInput.nextElementSibling;
+
+        function addMessage(message, isSent) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+            messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        const responses = [
+                        "I'll be there in 10 minutes!",
+                        "Sure, I'll call you when I reach.",
+                        "I'm at the building entrance, please provide the room number.",
+                        "I'm nearby, please keep the OTP ready."
+                    ];
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                addMessage(message, true);
+                messageInput.value = '';
+                
+                // Simulate delivery partner response
+                setTimeout(() => {
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, false);
+                }, 1000);
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+
+        // WebSocket Connection (Mock)
+        function initializeWebSocket() {
+            console.log('WebSocket connection initialized');
+            // In a real implementation, you would connect to your WebSocket server here
+            // const ws = new WebSocket('ws://your-websocket-server');
+            // ws.onmessage = (event) => {
+            //     const data = JSON.parse(event.data);
+            //     // Handle real-time updates
+            // };
+        }
+
+        // Initialize WebSocket when page loads
+        document.addEventListener('DOMContentLoaded', initializeWebSocket);
+      // Edit address
+      window.toggleEditAddress = () => {
+        const editForm = document.getElementById('editForm');
+        editForm.classList.toggle('active');
+        if (editForm.classList.contains('active')) {
+          document.getElementById('editName').value = document.getElementById('userName').textContent;
+          document.getElementById('editRoom').value = document.getElementById('userRoom').textContent;
+          document.getElementById('editPhone').value = document.getElementById('userPhone').textContent;
+        }
+      };
+  
+      window.saveAddress = () => {
+        document.getElementById('userName').textContent = document.getElementById('editName').value;
+        document.getElementById('userRoom').textContent = document.getElementById('editRoom').value;
+        document.getElementById('userPhone').textContent = document.getElementById('editPhone').value;
+        toggleEditAddress();
+      };
+    });
+  </script>
+  
+</body>
+</html>

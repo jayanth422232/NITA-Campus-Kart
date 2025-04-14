@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Cart</title>
+    <link rel="stylesheet" href="project.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url("./canteenback.webp");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .discount-section, .delivery-section {
+            margin-top: 20px;
+        }
+
+        .discount-section input, .delivery-section input {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .open-cart-btn {
+            background-color: #007bff;
+        }
+
+        .open-cart-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+        <ul id="cartItems"></ul>
+        <p>Subtotal: ₹<span id="cartSubtotal">0</span></p>
+
+        <!-- Discount Code Section -->
+        <div class="discount-section">
+            <label for="discount-code">Enter Discount Code:</label>
+            <input type="text" id="discount-code" placeholder="Enter code (e.g., HALF50)">
+            <button id="apply-discount">Apply Discount</button>
+            <p id="discount-message" style="color: green; display: none;">Discount applied!</p>
+        </div>
+        <div class="cutlery-section">
+            <p>Do you need cutlery?</p>
+            <div class="cutlery-toggle">
+              <button id="cutlery-yes" class="cutlery-btn">Yes</button>
+              <button id="cutlery-no" class="cutlery-btn active">No</button>
+            </div>
+            <div id="cutlery-options" style="display: none; margin-top: 10px;">
+              <label for="plates">Plates (max 2):</label>
+              <input type="number" id="plates" min="0" max="2" value="0">
+              <label for="spoons">Spoons (max 2):</label>
+              <input type="number" id="spoons" min="0" max="2" value="0">
+            </div>
+          </div>
+
+        <!-- Delivery Options -->
+        <div class="delivery-section">
+            <h3>Choose Delivery Option:</h3>
+            <label>
+                <input type="radio" name="delivery" value="cycle" checked> Cycle Delivery (+₹20)
+            </label>
+            <br>
+            <label>
+                <input type="radio" name="delivery" value="walk"> Walk Delivery (+₹10)
+            </label>
+        </div>
+
+        <!-- Total Cost -->
+        <p>Total: ₹<span id="cartTotal">0</span></p>
+
+        <!-- Order Now Button -->
+        <button id="order-now">Order Now</button>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+  const cartItemsList = document.getElementById('cartItems');
+  const cartSubtotalSpan = document.getElementById('cartSubtotal');
+  const cartTotalSpan = document.getElementById('cartTotal');
+  const discountCodeInput = document.getElementById('discount-code');
+  const applyDiscountBtn = document.getElementById('apply-discount');
+  const discountMessage = document.getElementById('discount-message');
+  const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
+  const orderNowBtn = document.getElementById('order-now');
+
+  let subtotal = 0;
+  let discount = 0;
+  let deliveryCost = 20; // Default delivery cost for cycle delivery
+
+  // Function to update the cart display
+  function updateCartDisplay() {
+    cartItemsList.innerHTML = ''; // Clear the list
+    subtotal = 0;
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+    for (const itemId in cart) {
+      if (cart.hasOwnProperty(itemId)) {
+        const item = cart[itemId];
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+
+        const listItem = document.createElement('li');
+        listItem.textContent = `${item.name} x ${item.quantity} = ₹${itemTotal}`;
+        cartItemsList.appendChild(listItem);
+      }
+    }
+
+    cartSubtotalSpan.textContent = subtotal;
+    updateTotalCost();
+  }
+
+  // Function to update the total cost
+  function updateTotalCost() {
+    const total = subtotal - discount + deliveryCost;
+    cartTotalSpan.textContent = total;
+  }
+
+  // Apply discount code
+  applyDiscountBtn.addEventListener('click', function () {
+    const code = discountCodeInput.value.trim().toLowerCase();
+    if (code === 'half50') {
+      discount = subtotal * 0.5; // 50% discount
+      discountMessage.style.display = 'block';
+    } else {
+      discount = 0;
+      alert('Invalid discount code!');
+    }
+    updateTotalCost();
+  });
+
+  // Update delivery cost based on selected option
+  deliveryOptions.forEach(option => {
+    option.addEventListener('change', function () {
+      deliveryCost = this.value === 'cycle' ? 20 : 10; // Cycle: ₹20, Walk: ₹10
+      updateTotalCost();
+    });
+  });
+
+  // Redirect to another webpage on "Order Now"
+  orderNowBtn.addEventListener('click', function () {
+    alert('Order placed successfully!');
+    window.location.href = 'orderpage.html'; // Replace with your confirmation page
+  });
+
+  // Initial cart display update
+  updateCartDisplay();
+});
+        document.addEventListener('DOMContentLoaded', function () {
+  const cutleryYes = document.getElementById('cutlery-yes');
+  const cutleryNo = document.getElementById('cutlery-no');
+  const cutleryOptions = document.getElementById('cutlery-options');
+  const platesInput = document.getElementById('plates');
+  const spoonsInput = document.getElementById('spoons');
+
+  cutleryYes.addEventListener('click', function () {
+    cutleryYes.classList.add('active');
+    cutleryNo.classList.remove('active');
+    cutleryOptions.style.display = 'block';
+  });
+
+  cutleryNo.addEventListener('click', function () {
+    cutleryNo.classList.add('active');
+    cutleryYes.classList.remove('active');
+    cutleryOptions.style.display = 'none';
+  });
+
+  // Validation for plates input
+  platesInput.addEventListener('input', function () {
+    if (platesInput.value > 2) {
+      alert('You can select a maximum of 2 plates.');
+      platesInput.value = 2; // Reset to the maximum allowed value
+    }
+  });
+
+  // Validation for spoons input
+  spoonsInput.addEventListener('input', function () {
+    if (spoonsInput.value > 2) {
+      alert('You can select a maximum of 2 spoons.');
+      spoonsInput.value = 2; // Reset to the maximum allowed value
+    }
+  });
+});
+    </script>
+</body>
+</html>

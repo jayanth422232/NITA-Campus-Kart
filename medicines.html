@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HealthCare Services</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* General body styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+
+    /* Header styling */
+    .header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    /* Container styling */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    .container p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    /* Button group styling */
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .button-group button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button-group button i {
+      font-size: 1.2rem;
+    }
+
+    .button-group button:hover {
+      background-color: #0056b3;
+      transform: translateY(-3px);
+    }
+
+    /* Footer styling */
+    footer {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Icon styling */
+    .icon {
+      font-size: 4rem;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .button-group {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .button-group button {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1>HealthCare Services</h1>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <i class="fas fa-heartbeat icon"></i>
+    <h1>Welcome to HealthCare Services</h1>
+    <p>Your one-stop solution for online consultations and medicine bookings.</p>
+    <div class="button-group">
+      <!-- Link to online-consultation.html -->
+      <button onclick="window.location.href='online-consultation.html'">
+        <i class="fas fa-video"></i> Online Consultation
+      </button>
+      <!-- Link to booking.html -->
+      <button onclick="window.location.href='booking.html'">
+        <i class="fas fa-pills"></i> Book Medicines
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>📞 +1234567890 | 📧 healthcare@example.com</p>
+  </footer>
+</body>
+</html>

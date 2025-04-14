@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Eggs Online</title>
+    <link rel="stylesheet" href="./eggs.css">
+    <script src="./eggs.js" defer></script>
+</head>
+<body>
+    <center>
+        <div style="height:30px"></div>
+        <div class="slide-in-div">BUY EGGS NOW</div>
+
+        <div class="container">
+            <form class="left-section">
+                <div class="menu-grid" style="display:flex";>
+                    <!-- Brown Eggs Menu Card -->
+                    <div class="menu-card non-veg">
+                      <img src="./brown-eggs.webp" alt="Brown Eggs">
+                      <h3>Brown Eggs</h3>
+                      <p class="price">₹7 per egg</p>
+                      <p>Rich in nutrients, perfect for your breakfast.</p>
+                      <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.5/5)</p>
+                      <div class="reviews">
+                        <p><strong>Reviews:</strong></p>
+                        <p>"Fresh and healthy eggs, great quality!"</p>
+                        <p>"Perfect for my morning omelette."</p>
+                      </div>
+                      <button class="add-to-cart" data-type="Brown Eggs" data-price="7">Add to Cart</button>
+                    </div>
+                  
+                    <!-- White Eggs Menu Card -->
+                    <div class="menu-card non-veg">
+                      <img src="./white-eggs.webp" alt="White Eggs">
+                      <h3>White Eggs</h3>
+                      <p class="price">₹5 per egg</p>
+                      <p>Affordable and versatile for all your recipes.</p>
+                      <p class="star-rating">Rating: ⭐⭐⭐⭐ (4.3/5)</p>
+                      <div class="reviews">
+                        <p><strong>Reviews:</strong></p>
+                        <p>"Great value for money, very fresh!"</p>
+                        <p>"Perfect for baking and cooking."</p>
+                      </div>
+                      <button class="add-to-cart" data-type="White Eggs" data-price="5">Add to Cart</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- View Cart Button -->
+                <div class="slide-in-div1">
+                    <button type="button" id="viewCart">View Cart</button>
+                </div>
+                <div class="slide-in-div2">
+                    <button type="button" id="generateBill">Generate Bill</button>
+                </div>
+                <div class="slide-in-div3">
+                    <input type="text" id="discountCode" placeholder="Enter Discount Code">
+                    <button type="button" id="applyDiscount">Apply Discount</button>
+                </div>
+                <div class="slide-in-div4">
+                    <button type="button" id="payNow">Pay Now</button>
+                </div>
+            </form>
+
+            <!-- Cart Modal -->
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+      <h3>Your Cart</h3>
+      <div id="cartItems"></div>
+      <button id="closeCartModal">Close</button>
+    </div>
+  </div>
+  
+  <!-- Bill Modal -->
+  <div id="billModal" class="modal">
+    <div class="modal-content">
+      <h3>Your Bill</h3>
+      <div id="billDetails"></div>
+      <button id="closeBillModal">Close</button>
+    </div>
+  </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div id="paymentModal" class="modal">
+            <div class="modal-content">
+                <h3>Select Payment Method</h3>
+                <button class="payment-option" id="cashOnDelivery">Cash on Delivery</button>
+                <button class="payment-option" id="gpay">GPay</button>
+                <button class="payment-option" id="phonepe">PhonePe</button>
+                <button class="payment-option" id="paytm">Paytm</button>
+                <button id="closeModal">Cancel</button>
+            </div>
+        </div>
+    </center>
+</body>
+</html>

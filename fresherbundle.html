@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Freshers Bundle</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+      color: #333;
+    }
+    .navbar {
+      background-color: #ff6f61;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .cart {
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #ffffff;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .cart:hover {
+      transform: scale(1.2);
+      color: #ffe066;
+    }
+    .marquee {
+      background: #ffe066;
+      color: #333;
+      padding: 1rem;
+      font-size: 1.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 15s linear infinite;
+    }
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    .products {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .product {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      text-align: center;
+      width: 220px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .product h4 {
+      margin: 0.5rem 0;
+    }
+    .product p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+    .combo-pack {
+      background: #ff6f61;
+      color: white;
+      padding: 1rem;
+      margin: 2rem auto;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .combo-pack h3 {
+      margin: 0;
+    }
+    .footer {
+      background: #ff6f61;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+    .buy-now-btn {
+      display: block;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .buy-now-btn:hover {
+      background-color: #ff8566;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <h1>Freshers Bundle</h1>
+  </div>
+
+  <div class="marquee">
+    <span>Hurry! Limited stock available · Use coupon code FRESH10 for 10% off · Combo packs available · Discounts for freshers!</span>
+  </div>
+
+  <div class="products">
+    <div class="product">
+      <img src="https://featherlitefurniture.com/wp-content/uploads/2023/11/RELAX-BED_1.jpg" alt="Bed">
+      <h4>Bed</h4>
+      <p>Comfortable single bed for hostel use.</p>
+      <p>₹5000</p>
+    </div>
+    <div class="product">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8A-AE6wC1c0etqBh4N6sZTMGgPamCKn_b4Q&s" alt="Table">
+      <h4>Table</h4>
+      <p>Sturdy wooden study table.</p>
+      <p>₹3000</p>
+    </div>
+    <div class="product">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_ILHERjRw9P9CVf4pJhHAhxvHhU99t0Ntg&s" alt="Lamp">
+      <h4>Lamp</h4>
+      <p>LED desk lamp for study.</p>
+      <p>₹1500</p>
+    </div>
+    <div class="product">
+      <img src="https://djl2kq23xfhqi.cloudfront.net/productimages/7000953.jpg" alt="Pencil">
+      <h4>Pencil</h4>
+      <p>Set of 10 pencils for writing and drawing.</p>
+      <p>₹50</p>
+    </div>
+    <div class="product">
+      <img src="https://m.media-amazon.com/images/I/31bOxxWWIeL._SR290,290_.jpg" alt="Backpack">
+      <h4>Backpack</h4>
+      <p>Durable and spacious backpack.</p>
+      <p>₹1200</p>
+    </div>
+    <div class="product">
+      <img src="https://5.imimg.com/data5/SELLER/Default/2022/8/KA/LK/JM/158032092/rough-fair-notebooks.jpg" alt="Notebook">
+      <h4>Notebook</h4>
+      <p>Set of 5 notebooks for daily use.</p>
+      <p>₹200</p>
+    </div>
+    <div class="product">
+      <img src="https://www.bigbasket.com/media/uploads/p/xxl/40135051_5-princeware-plastic-bucket-for-bathingcleaning-with-handle-frosty-pink.jpg" alt="Bucket">
+      <h4>Bucket</h4>
+      <p>Plastic bucket for daily use.</p>
+      <p>₹300</p>
+    </div>
+    <div class="product">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbRBEyOERmv2wiv4N3G3VZqsTIGg2JkXvqQw&s" alt="Stationery Kit">
+      <h4>Stationery Kit</h4>
+      <p>Complete stationery kit for students.</p>
+      <p>₹500</p>
+    </div>
+    <div class="product">
+      <img src="https://nanonine.in/cdn/shop/products/Slimsteelblue1_af4121c1-87f8-4918-a0c9-48369d5a0cde.jpg?v=1665492501">
+      <h4>Water Bottle</h4>
+      <p>Stainless steel water bottle.</p>
+      <p>₹250</p>
+    </div>
+    <div class="product">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDSjaWzbSdfNLNl6WJTbNGkZCXwyEIMuy8NQ&s" alt="Lunch Box">
+      <h4>Lunch Box</h4>
+      <p>Leak-proof lunch box for daily use.</p>
+      <p>₹500</p>
+    </div>
+    <div class="product">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs6ESlLMIwvbgBN4HO0K9B8KyYPFG473-XHA&s" alt="Shoes">
+      <h4>Shoes</h4>
+      <p>Comfortable running shoes.</p>
+      <p>₹1500</p>
+    </div>
+    <div class="product">
+      <img src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQTR3?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1741643688482" alt="Headphones">
+      <h4>Headphones</h4>
+      <p>Noise-cancelling headphones.</p>
+      <p>₹2000</p>
+    </div>
+    <div class="product">
+      <img src="https://media.casioindiashop.com/assets/products-images/big-image/C74.webp?scale.height=400" alt="Calculator">
+      <h4>Calculator</h4>
+      <p>Scientific calculator for students.</p>
+      <p>₹800</p>
+    </div>
+  </div>
+
+  <div class="combo-pack">
+    <h3>Combo Pack Offer</h3>
+    <p>Get a Bed, Table, and Lamp for just ₹8500! Limited time offer.</p>
+  </div>
+
+  <button class="buy-now-btn" onclick="showTotal()">Buy Now</button>
+
+  <div class="footer">
+    <p>Contact us: freshersbundle@example.com | Phone: +91 9876543210</p>
+    <p>&copy; 2025 Freshers Bundle. All rights reserved.</p>
+  </div>
+
+  <script>
+    function showTotal() {
+      const totalAmount = 8500; // Example total amount
+      const couponCode = prompt("Enter coupon code for discount (e.g., FRESH10):");
+      if (couponCode === "FRESH10") {
+        const discountedAmount = totalAmount * 0.9; // 10% discount
+        alert(`Coupon applied! Your total amount after discount is ₹${discountedAmount.toFixed(2)}`);
+      } else if (couponCode) {
+        alert("Invalid coupon code. No discount applied.");
+        alert(`Your total amount is ₹${totalAmount}`);
+      } else {
+        alert(`Your total amount is ₹${totalAmount}`);
+      }
+    }
+  </script>
+</body>
+</html>
